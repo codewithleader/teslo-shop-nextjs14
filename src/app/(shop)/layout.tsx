@@ -1,3 +1,5 @@
+import { TopMenu } from '@/components';
+
 export default function ShopLayout({
   children,
 }: {
@@ -8,6 +10,7 @@ export default function ShopLayout({
       //
       className='min-h-screen'
     >
+      <TopMenu />
       {children}
     </main>
   );

@@ -7,7 +7,7 @@
 npm run dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:7777](http://localhost:7777) with your browser to see the result.
 
 # Icons: [React Icons](https://react-icons.github.io/react-icons/)
 
