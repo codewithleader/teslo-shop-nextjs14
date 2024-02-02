@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import Image from 'next/image';
 import { Swiper as SwiperObject } from 'swiper';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Autoplay, FreeMode, Navigation, Thumbs } from 'swiper/modules';
@@ -11,7 +12,6 @@ import 'swiper/css/navigation';
 import 'swiper/css/thumbs';
 
 import './slideshow.css';
-import Image from 'next/image';
 
 interface Props {
   images: string[];
@@ -27,7 +27,7 @@ export const ProductSlideshow = ({ images, title, className }: Props) => {
         style={
           {
             '--swiper-navigation-color': '#fff',
-            '--swiper-pagination-color': '#fff',
+            // '--swiper-pagination-color': '#fff',
           } as React.CSSProperties
         }
         loop={true}
@@ -47,7 +47,7 @@ export const ProductSlideshow = ({ images, title, className }: Props) => {
           <SwiperSlide key={img}>
             <Image
               width={1024}
-              height={800}
+              height={768}
               src={`/products/${img}`}
               alt={title}
               className='rounded-lg object-fill'

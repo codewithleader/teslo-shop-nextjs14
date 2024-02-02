@@ -1,7 +1,12 @@
-import { ProductSlideshow, QuantitySelector, SizeSelector } from '@/components';
+import { notFound } from 'next/navigation';
+import {
+  ProductMobileSlideshow,
+  ProductSlideshow,
+  QuantitySelector,
+  SizeSelector,
+} from '@/components';
 import { titleFont } from '@/config/fonts';
 import { initialData } from '@/seed/seed';
-import { notFound } from 'next/navigation';
 
 interface Props {
   params: {
@@ -17,7 +22,19 @@ export default function ProductPage({ params }: Props) {
     <div className='mt-5 mb-20 grid grid-cols-1 md:grid-cols-3 gap-3'>
       {/* SlideShow */}
       <div className='col-span-1 md:col-span-2'>
-        <ProductSlideshow images={product.images} title={product.title} />
+        {/* Mobile Slideshow */}
+        <ProductMobileSlideshow
+          images={product.images}
+          title={product.title}
+          className='block md:hidden'
+        />
+
+        {/* Desktop Slideshow */}
+        <ProductSlideshow
+          images={product.images}
+          title={product.title}
+          className='hidden md:block'
+        />
       </div>
       {/* Details */}
       <div className='col-span-1 px-5'>
@@ -27,7 +44,10 @@ export default function ProductPage({ params }: Props) {
         <p className='text-lg mb-5'>${product.price}</p>
 
         {/* Selector de tallas */}
-        <SizeSelector selectedSize={product.sizes[0]} availableSizes={product.sizes} />
+        <SizeSelector
+          selectedSize={product.sizes[0]}
+          availableSizes={product.sizes}
+        />
 
         {/* Selector de cantidad */}
         <QuantitySelector quantity={2} />
