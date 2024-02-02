@@ -1,6 +1,6 @@
 'use client';
 
-import Link from 'next/link';
+// import Link from 'next/link';
 import {
   IoCloseOutline,
   IoLogInOutline,
@@ -11,7 +11,10 @@ import {
   IoShirtOutline,
   IoTicketOutline,
 } from 'react-icons/io5';
+import clsx from 'clsx';
+//
 import { SidebarLink, SidebarLinkProps } from './SidebarLink';
+import { useUIStore } from '@/store';
 
 const userMenuItems: SidebarLinkProps[] = [
   {
@@ -55,23 +58,38 @@ const adminMenuItems: SidebarLinkProps[] = [
 ];
 
 export const Sidebar = () => {
+  const isSideMenuOpen = useUIStore((state) => state.isSideMenuOpen);
+  const closeSideMenu = useUIStore((state) => state.closeSideMenu);
+
   return (
     <div>
-      {/* Gray Background */}
-      <div className='fixed top-0 left-0 w-screen h-screen z-10 bg-black opacity-30' />
+      {isSideMenuOpen && (
+        /* Gray Background */
+        <div className='fixed top-0 left-0 w-screen h-screen z-10 bg-black opacity-30' />
+      )}
 
-      {/* Blur */}
-      <div className='fade-in fixed top-0 left-0 w-screen h-screen z-10 backdrop-filter backdrop-blur-sm' />
+      {isSideMenuOpen && (
+        /* Blur */
+        <div
+          onClick={closeSideMenu}
+          className='fade-in fixed top-0 left-0 w-screen h-screen z-10 backdrop-filter backdrop-blur-sm'
+        />
+      )}
 
       {/* SideMenu */}
       <nav
-        // todo: efecto slice
-        className='fixed p-5 right-0 top-0 w-[500px] h-screen bg-white z-20 shadow-2xl transform transition-all duration-300'
+        // clsx: Es una dependencia que ayuda a aplicar clases de TailwindCSS condicionalmente
+        className={clsx(
+          'fixed p-5 right-0 top-0 w-[500px] h-screen bg-white z-20 shadow-2xl transform transition-all duration-300',
+          {
+            'translate-x-full': !isSideMenuOpen,
+          }
+        )}
       >
         <IoCloseOutline
           size={50}
           className='absolute top-5 right-5 cursor-pointer'
-          onClick={() => console.log('click')}
+          onClick={closeSideMenu}
         />
 
         {/* Input Search */}
