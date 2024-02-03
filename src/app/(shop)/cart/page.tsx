@@ -55,7 +55,7 @@ export default function CartPage() {
 
 
           <div className='flex flex-col mt-5'>
-          <hr className='border-gray-300 md:hidden' />
+          <hr className='border-gray-300 border-2 md:hidden' />
           {/* Summary */}
             <div className='md:bg-white md:rounded-xl md:shadow-xl p-10 lg:ml-28'>
               <h2 className='text-2xl mb-2'>Resumen de orden</h2>
