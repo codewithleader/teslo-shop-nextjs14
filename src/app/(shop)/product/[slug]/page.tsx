@@ -19,7 +19,7 @@ export default function ProductPage({ params }: Props) {
   const product = initialData.products.find((p) => p.slug === slug);
   if (!product) notFound();
   return (
-    <div className='mt-5 mb-20 grid grid-cols-1 md:grid-cols-3 gap-3'>
+    <div className='md:px-10 mt-5 mb-20 grid grid-cols-1 md:grid-cols-3 gap-3'>
       {/* SlideShow */}
       <div className='col-span-1 md:col-span-2'>
         {/* Mobile Slideshow */}
