@@ -2,10 +2,9 @@
 @codewithleather
 
 ## Getting Started
-
-```bash
-npm run dev
-```
+1. Clonar repositorio.
+2. Instalar dependencias ```npm i```
+3. Correr el proyecto ```npm run dev```
 
 Open [http://localhost:7777](http://localhost:7777) with your browser to see the result.
 
@@ -15,4 +14,4 @@ Open [http://localhost:7777](http://localhost:7777) with your browser to see the
 # clsx
 
 - Es una dependencia que ayuda a aplicar clases de TailwindCSS condicionalmente.
-- [Link NPM](https://www.npmjs.com/package/clsx)
+- [clsx NPM link](https://www.npmjs.com/package/clsx)

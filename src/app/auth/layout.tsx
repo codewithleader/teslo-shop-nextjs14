@@ -5,7 +5,7 @@ export default function AuthLayout({
 }) {
   return (
     <main className='flex justify-center'>
-      <div className='w-full sm:w-[450px] px-10'>{children}</div>
+      <div className='w-[450px] px-10'>{children}</div>
     </main>
   );
 }

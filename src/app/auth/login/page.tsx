@@ -21,7 +21,7 @@ export default function LoginPage() {
 
         <button className='btn-primary'>Ingresar</button>
 
-        {/* divisor l ine */}
+        {/* divisor line */}
         <div className='flex items-center my-5'>
           <div className='flex-1 border-t border-gray-500'></div>
           <div className='px-2 text-gray-800'>O</div>
