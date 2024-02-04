@@ -1,5 +1,11 @@
 # See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
 
+# docker volumes
+/docker
+
+# local env files
+.env
+
 # dependencies
 /node_modules
 /.pnp
@@ -24,11 +30,6 @@
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
-
-# local env files
-.env*.local
-.env
-/docker
 
 # vercel
 .vercel

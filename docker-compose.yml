@@ -1,0 +1,21 @@
+version: "3.8"
+services:
+  postgresdb:
+    container_name: my_postgres_db
+    image: postgres:15.3
+    restart: always
+    environment:
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_DB: ${DB_NAME}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+    volumes:
+      - ./docker/postgres/storage:/var/lib/postgresql/data
+    ports:
+      - 5432:5432
+    networks:
+    - my_network # Conecta este servicio a la red personalizada my_network
+
+# Definición de la red personalizada
+networks:
+  my_network:
+    name: mynetwork # Nombre de la red personalizada

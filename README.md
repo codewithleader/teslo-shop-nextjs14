@@ -3,8 +3,10 @@
 
 ## Getting Started
 1. Clonar repositorio.
-2. Instalar dependencias ```npm i```
-3. Correr el proyecto ```npm run dev```
+2. Crear una copia del archivo `.env.templete`, renombrarlo a `.env` y cambiar las variables de entorno.
+3. Instalar dependencias ```npm i```
+4. Levantar la base de datos ```docker compose up -d``` (Se necesita tener Docker Desktop abierto)
+5. Correr el proyecto ```npm run dev```
 
 Open [http://localhost:7777](http://localhost:7777) with your browser to see the result.
 
