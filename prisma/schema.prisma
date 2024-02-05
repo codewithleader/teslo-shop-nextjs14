@@ -1,0 +1,17 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+/// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by Prisma Client.
+model MiTabla {
+  id   Int     @default(autoincrement())
+  name String? @db.VarChar
+  age  Int?    @db.SmallInt
+
+  @@ignore
+}

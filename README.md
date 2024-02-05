@@ -17,3 +17,7 @@ Open [http://localhost:7777](http://localhost:7777) with your browser to see the
 
 - Es una dependencia que ayuda a aplicar clases de TailwindCSS condicionalmente.
 - [clsx NPM link](https://www.npmjs.com/package/clsx)
+
+# Prisma ORM
+
+- Crear modelo a partir de la base de datos ya con tablas estructuradas: ```npx prisma db pull```
