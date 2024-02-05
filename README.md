@@ -1,17 +1,25 @@
 # Teslo Shop NextJS v14
+
 @codewithleather
 
+# Description
+
 ## Getting Started
-1. Clonar repositorio.
-2. Crear una copia del archivo `.env.templete`, renombrarlo a `.env` y cambiar las variables de entorno.
-3. Instalar dependencias ```npm i```
-4. Levantar la base de datos ```docker compose up -d``` (Se necesita tener Docker Desktop abierto)
-5. Correr las migraciones de Prisma ```npx prisma migrate dev```
-6. Correr el proyecto ```npm run dev```
+
+## Run Dev
+
+1. Clone repository.
+2. Copy `.env.template`, rename it to `.env` and change the environment variables.
+3. Install dependencies `npm install`
+4. Build database `docker compose up -d`
+5. Run migrations `npx prisma migrate dev`
+6. Run seed `npm run seed`
+7. Run project `npm run dev`
 
 Open [http://localhost:7777](http://localhost:7777) with your browser to see the result.
 
 # Icons
+
 - [React Icons](https://react-icons.github.io/react-icons/)
 
 # clsx
@@ -21,5 +29,5 @@ Open [http://localhost:7777](http://localhost:7777) with your browser to see the
 
 # Prisma ORM
 
-- Crear modelo a partir de la base de datos ya con tablas estructuradas: ```npx prisma db pull```
-- Crear cliente de Prisma ```npx prisma generate``` Pero para mejores practicas en NextJS se recomienda usar el de la documentacion: [Prisma Client NextJS](https://www.prisma.io/docs/orm/more/help-and-troubleshooting/help-articles/nextjs-prisma-client-dev-practices#solution)
+- Crear modelo a partir de la base de datos ya con tablas estructuradas: `npx prisma db pull`
+- Crear cliente de Prisma `npx prisma generate` Pero para mejores practicas en NextJS se recomienda usar el de la documentacion: [Prisma Client NextJS](https://www.prisma.io/docs/orm/more/help-and-troubleshooting/help-articles/nextjs-prisma-client-dev-practices#solution)
