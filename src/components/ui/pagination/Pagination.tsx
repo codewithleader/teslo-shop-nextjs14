@@ -22,7 +22,7 @@ export const Pagination = ({ totalPages }: Props) => {
   // console.log({ currentPage, totalPages, allPages });
 
   const createPageUrl = (pageNumber: number | string) => {
-    const params = new URLSearchParams(searchParams); // URLSearchParams: No hay que importar, ya viene en Javascript. Sirve para construir los parámetros de la URL.
+    const params = new URLSearchParams(searchParams); // URLSearchParams: No hay que importar, ya viene en Javascript. Sirve para construir los parámetros de la URL. Algo asi como localStorage.set() y localStorage.get(), más o menos
     if (pageNumber === '...') {
       return `${pathname}?${params.toString()}`; // Muestra la misma página actual pero mueve la vista hasta arriba.
     }
@@ -45,10 +45,11 @@ export const Pagination = ({ totalPages }: Props) => {
               <Link
                 // Classes para deshabilitado: // className='page-link relative block py-1.5 px-3 border-0 bg-transparent outline-none transition-all duration-300 rounded text-gray-500 pointer-events-none focus:shadow-none'
                 className={clsx(
-                  'page-link relative block py-1.5 px-3 rounded border-0 bg-transparent outline-none transition-all duration-300 text-gray-800 hover:text-gray-800 hover:bg-gray-200 focus:shadow-none',
+                  'page-link relative block py-1.5 px-3 rounded border-0 bg-transparent outline-none transition-all duration-300 focus:shadow-none',
                   {
-                    'text-gray-500 pointer-events-none focus:shadow-none':
-                      currentPage < 2,
+                    'text-gray-800 hover:text-gray-800 hover:bg-gray-200':
+                      currentPage >= 2,
+                    'text-gray-400 pointer-events-none': currentPage < 2,
                   }
                 )}
                 href={createPageUrl(currentPage - 1)}
@@ -92,9 +93,11 @@ export const Pagination = ({ totalPages }: Props) => {
             <li className='page-item'>
               <Link
                 className={clsx(
-                  'page-link relative block py-1.5 px-3 rounded border-0 bg-transparent outline-none transition-all duration-300 text-gray-800 hover:text-gray-800 hover:bg-gray-200 focus:shadow-none',
+                  'page-link relative block py-1.5 px-3 rounded border-0 bg-transparent outline-none transition-all duration-300 focus:shadow-none',
                   {
-                    'text-gray-500 pointer-events-none focus:shadow-none':
+                    'text-gray-800 hover:text-gray-800 hover:bg-gray-200':
+                      currentPage < totalPages,
+                    'text-gray-400 pointer-events-none':
                       currentPage === totalPages,
                   }
                 )}

@@ -2,13 +2,22 @@ import { titleFont } from '@/config/fonts';
 import Image from 'next/image';
 import Link from 'next/link';
 
-export const NotFound = () => {
+interface Props {
+  message?: string;
+  errorCodeNumber?: string;
+}
+
+export const ErrorComponent = ({ message, errorCodeNumber }: Props) => {
   return (
     <div className='flex flex-col-reverse md:flex-row height-custom w-full justify-center items-center align-middle'>
       <div className='text-center px-5 mx-5'>
         {/* Note: 'antialiased': Suavisa la fuente */}
-        <h2 className={`${titleFont.className} antialiased text-9xl`}>404</h2>
-        <p className='font-semibold text-xl'>Ooops! Página no encontrada</p>
+        <h2 className={`${titleFont.className} antialiased text-9xl`}>
+          {errorCodeNumber ? errorCodeNumber : '404'}
+        </h2>
+        <p className='font-semibold text-xl'>
+          {message ? message : 'Ooops! Página no encontrada'}
+        </p>
         <p className='font-light'>
           <span>Puedes regresar al </span>
           <Link
