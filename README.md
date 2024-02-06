@@ -2,6 +2,9 @@
 
 @codewithleather
 
+TODO: [https://www.npmjs.com/package/sharp](https://www.npmjs.com/package/sharp)
+Optimizar imagenes con sharp
+
 # Description
 
 ## Getting Started

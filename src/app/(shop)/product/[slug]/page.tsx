@@ -1,3 +1,5 @@
+export const revalidate = 60; // 60 segundos
+
 import { notFound } from 'next/navigation';
 import {
   ProductMobileSlideshow,

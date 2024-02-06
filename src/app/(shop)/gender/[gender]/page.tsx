@@ -1,4 +1,6 @@
-import { notFound, redirect } from 'next/navigation';
+export const revalidate = 60; // 60 segundos
+
+import { redirect } from 'next/navigation';
 //
 import { Pagination, ProductGrid, Title } from '@/components';
 import { getPaginatedProductsWithImages } from '@/actions';
