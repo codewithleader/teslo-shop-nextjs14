@@ -9,7 +9,7 @@ interface Props {
   reset: () => void;
 }
 
-export default function Error({ error, reset }: Props) {
+export default function GenderErrorPage({ error, reset }: Props) {
   useEffect(() => {
     // Log the error to an error reporting service
     console.error(error);

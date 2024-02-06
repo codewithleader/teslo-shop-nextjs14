@@ -16,7 +16,7 @@ interface Props {
   };
 }
 
-export default function ProductPage({ params }: Props) {
+export default function ProductBySlugPage({ params }: Props) {
   const { slug } = params;
   const product = initialData.products.find((p) => p.slug === slug);
   if (!product) notFound();

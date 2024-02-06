@@ -1,7 +1,7 @@
 'use client';
 import { useEffect } from 'react';
 
-// todo: falta probar este error
+// todo: falta probar este error pero no se como
 
 interface Props {
   error: Error & { digest?: string };
@@ -16,6 +16,7 @@ export default function GlobalError({ error, reset }: Props) {
   return (
     <html>
       <body>
+        <h1>ERROR DE GlobalError Page</h1>
         <h2>Something went wrong!</h2>
         <button onClick={() => reset()}>Try again</button>
       </body>

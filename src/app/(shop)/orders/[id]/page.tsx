@@ -22,7 +22,7 @@ interface Props {
   };
 }
 
-export default function OrderPage({ params }: Props) {
+export default function OrderByIdPage({ params }: Props) {
   const { id } = params;
   // todo: validaciones
 
