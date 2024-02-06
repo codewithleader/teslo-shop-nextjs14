@@ -1,10 +1,11 @@
 import { titleFont } from '@/config/fonts';
 import Image from 'next/image';
 import Link from 'next/link';
+import { ErrorCodeNumber } from './types';
 
 interface Props {
   message?: string;
-  errorCodeNumber?: string;
+  errorCodeNumber?: ErrorCodeNumber;
 }
 
 export const ErrorComponent = ({ message, errorCodeNumber }: Props) => {

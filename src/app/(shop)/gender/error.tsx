@@ -3,7 +3,7 @@
 import { useEffect } from 'react';
 import { ErrorComponent } from '@/components';
 
-// error.tsx components have error props
+// error.tsx have error props
 interface Props {
   error: Error & { digest?: string };
   reset: () => void;
@@ -15,5 +15,5 @@ export default function Error({ error, reset }: Props) {
     console.error(error);
   }, [error]);
 
-  return <ErrorComponent message={error.message} errorCodeNumber='500' />;
+  return <ErrorComponent message={error.message} errorCodeNumber={'500'} />;
 }
