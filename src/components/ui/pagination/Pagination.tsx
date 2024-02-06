@@ -1,7 +1,7 @@
 'use client';
 
 import Link from 'next/link';
-import { usePathname, useSearchParams } from 'next/navigation';
+import { redirect, usePathname, useSearchParams } from 'next/navigation';
 import { IoChevronBackOutline, IoChevronForwardOutline } from 'react-icons/io5';
 import clsx from 'clsx';
 import { generatePaginationNumbers } from '@/utils';
@@ -14,9 +14,9 @@ export const Pagination = ({ totalPages }: Props) => {
   const searchParams = useSearchParams();
   const pathname = usePathname();
   const pageString = searchParams.get('page') ?? '1';
-  let currentPage = isNaN(+pageString) ? 1 : +pageString;
-  if (currentPage < 1) {
-    currentPage = 1;
+  const currentPage = isNaN(+pageString) ? 1 : +pageString;
+  if (currentPage < 1 || isNaN(+pageString)) {
+    redirect(pathname);
   }
   const allPages = generatePaginationNumbers(currentPage, totalPages);
   // console.log({ currentPage, totalPages, allPages });
