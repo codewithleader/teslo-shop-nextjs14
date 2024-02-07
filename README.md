@@ -2,6 +2,9 @@
 
 @codewithleather
 
+TODO: [OpenGraph](https://www.opengraph.xyz/)
+Ver la metadata para redes sociales cuando se despliegue en vercel
+
 TODO: [https://www.npmjs.com/package/sharp](https://www.npmjs.com/package/sharp)
 Optimizar imagenes con sharp
 

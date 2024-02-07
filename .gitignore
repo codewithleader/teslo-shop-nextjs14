@@ -6,6 +6,9 @@
 # local env files
 .env
 
+.vscode/
+/.vscode
+
 # dependencies
 /node_modules
 /.pnp
