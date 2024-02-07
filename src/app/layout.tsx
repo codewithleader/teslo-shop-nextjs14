@@ -3,8 +3,12 @@ import type { Metadata } from 'next';
 import { inter } from '@/config/fonts';
 import './globals.css';
 
+// Metadata Template: https://nextjs.org/docs/app/api-reference/functions/generate-metadata#template
 export const metadata: Metadata = {
-  title: 'Teslo | Shop',
+  title: {
+    template: '%s - Teslo | Shop', // title.template can be used to add a prefix or a suffix to titles defined in child route segments.
+    default: 'Home - Teslo | Shop', // a default is required when creating a template
+  },
   description: 'NextJS v14',
 };
 

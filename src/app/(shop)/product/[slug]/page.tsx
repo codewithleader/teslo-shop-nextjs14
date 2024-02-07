@@ -10,10 +10,38 @@ import {
 } from '@/components';
 import { titleFont } from '@/config/fonts';
 import { getProductBySlug } from '@/actions';
+import { Metadata, ResolvingMetadata } from 'next';
 
 interface Props {
   params: {
     slug: string;
+  };
+}
+
+// Generar Metadata dinamica
+export async function generateMetadata(
+  { params }: Props,
+  parent: ResolvingMetadata
+): Promise<Metadata> {
+  // read route params
+  const { slug } = params;
+
+  // fetch data
+  const product = await getProductBySlug(slug);
+
+  // optionally access and extend (rather than replace) parent metadata
+  // const previousImages = (await parent).openGraph?.images || [];
+
+  return {
+    title: product?.title ?? 'Producto no encontrado',
+    description: product?.description ?? '',
+    // Social Networks 👇🏻👇🏻👇🏻
+    openGraph: {
+      title: product?.title ?? 'Producto no encontrado',
+      description: product?.description ?? '',
+      // images: ['/some-specific-page-image.jpg', ...previousImages],
+      images: [`/products/${product?.images[1]}`],
+    },
   };
 }
 
