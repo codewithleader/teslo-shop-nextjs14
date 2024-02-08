@@ -48,7 +48,9 @@ export default function CartPage() {
                 <div>
                   <p>{product.title}</p>
                   <p>${product.price}</p>
-                  <QuantitySelector quantity={3} />
+                  {/* <QuantitySelector quantity={3} stock={0} onQuantityChanged={function (value: number): void {
+                    throw new Error('Function not implemented.');
+                  } } /> */}
                   <button className='underline mt-3'>Remover</button>
                 </div>
               </div>
