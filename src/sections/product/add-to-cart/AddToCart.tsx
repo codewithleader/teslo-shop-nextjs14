@@ -22,9 +22,9 @@ export const AddToCart = ({ product }: Props) => {
   };
   return (
     <>
-      {posted && !size ? (
-        <span className={'mt-2 text-red-500'}>Debe seleccionar una talla*</span>
-      ) : null}
+      {posted && !size && (
+        <span className={'mt-2 text-red-500 fade-in'}>Debe seleccionar una talla*</span>
+      )}
       {/* Selector de tallas */}
       {product.inStock > 0 && (
         <SizeSelector
