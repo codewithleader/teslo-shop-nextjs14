@@ -4,6 +4,7 @@ import { useState } from 'react';
 //
 import { QuantitySelector, SizeSelector } from '@/components';
 import { Product, Size } from '@/interfaces';
+import clsx from 'clsx';
 
 interface Props {
   product: Product;
@@ -12,20 +13,41 @@ interface Props {
 export const AddToCart = ({ product }: Props) => {
   const [size, setSize] = useState<Size | undefined>();
   const [quantity, setQuantity] = useState<number>(1);
+
+  const addToCart = () => {
+    if (!size) {
+      console.log('elige una talla antes de continuar');
+      return;
+    }
+    console.log({ quantity, size });
+  };
   return (
     <>
       {/* Selector de tallas */}
-      <SizeSelector
-        selectedSize={size}
-        availableSizes={product.sizes}
-        onSizeChanged={setSize}
-      />
+      {product.inStock > 0 && (
+        <SizeSelector
+          selectedSize={size}
+          availableSizes={product.sizes}
+          onSizeChanged={setSize}
+        />
+      )}
 
       {/* Selector de cantidad */}
-      <QuantitySelector quantity={quantity} onQuantityChanged={setQuantity} />
+      <QuantitySelector
+        stock={product.inStock}
+        quantity={quantity}
+        onQuantityChanged={setQuantity}
+      />
 
       {/* Button */}
-      <button className='btn-primary my-5'>Agregar al carrito</button>
+      <button
+        onClick={addToCart}
+        className={clsx('btn-primary my-5', {
+          'pointer-events-none btn-secondary': product.inStock === 0,
+        })}
+      >
+        Agregar al carrito
+      </button>
     </>
   );
 };
