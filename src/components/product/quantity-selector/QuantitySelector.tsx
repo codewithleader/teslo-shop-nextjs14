@@ -22,7 +22,7 @@ export const QuantitySelector = ({
     onQuantityChanged(quantity + value);
   };
   return (
-    <div className='flex'>
+    <div className="flex">
       <button
         className={clsx('', {
           'pointer-events-none': quantity <= 1,
@@ -31,7 +31,8 @@ export const QuantitySelector = ({
       >
         <IoRemoveCircleOutline size={30} />
       </button>
-      <span className='flex items-center justify-center w-20 mx-3 px-5 bg-gray-100 rounded'>
+
+      <span className="flex items-center justify-center w-20 mx-3 px-5 bg-gray-100 rounded">
         {stock === 0 ? 0 : quantity}
       </span>
       <button

@@ -6,10 +6,10 @@ import { ErrorComponent } from '@/components';
 // error.tsx have error props
 interface Props {
   error: Error & { digest?: string };
-  reset: () => void;
+  reset: () => void; // desestructurar en las props cuando se necesite
 }
 
-export default function GenderErrorPage({ error, reset }: Props) {
+export default function GenderErrorPage({ error }: Props) {
   useEffect(() => {
     // Log the error to an error reporting service
     console.error(error);

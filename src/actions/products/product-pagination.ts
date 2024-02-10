@@ -1,5 +1,5 @@
 'use server';
-import { Type } from '@/interfaces';
+// import { Type } from '@/interfaces';
 import prisma from '@/lib/prisma';
 import { Gender } from '@prisma/client';
 
@@ -48,11 +48,12 @@ export const getPaginatedProductsWithImages = async ({
       currentPage: page,
       totalPages,
       products: products.map(
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
         ({ categoryId, category, ProductImage, ...product }) => ({
           ...product,
           images: ProductImage.map((img) => img.url),
           // type: category.name.toLowerCase() as Type,
-        })
+        }),
       ),
     };
   } catch (error) {

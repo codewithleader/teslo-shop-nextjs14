@@ -23,12 +23,15 @@ export default async function GenderPage({ params, searchParams }: Props) {
   //   notFound();
   // }
   const page = searchParams.page ? parseInt(searchParams.page) : 1;
-  const { products, currentPage, totalPages } =
-    await getPaginatedProductsWithImages({
-      page,
-      take: 7,
-      gender: gender as Gender,
-    });
+  const {
+    // currentPage,
+    products,
+    totalPages,
+  } = await getPaginatedProductsWithImages({
+    page,
+    take: 7,
+    gender: gender as Gender,
+  });
   // console.log({ currentPage, totalPages });
   if (products.length === 0) {
     redirect(`/gender/${gender}`);
@@ -44,7 +47,7 @@ export default async function GenderPage({ params, searchParams }: Props) {
       <Title
         title={`Tienda (${labels[gender]})`}
         subtitle={`Artículos para ${labels[gender]}`}
-        className='mb-2'
+        className="mb-2"
       />
       <ProductGrid products={products} />
       <Pagination totalPages={totalPages} />

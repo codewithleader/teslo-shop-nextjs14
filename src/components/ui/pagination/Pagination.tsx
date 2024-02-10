@@ -38,10 +38,10 @@ export const Pagination = ({ totalPages }: Props) => {
 
   return (
     <>
-      <div className='flex justify-center mt-10 mb-32'>
+      <div className="flex justify-center mt-10 mb-32">
         <nav>
-          <ul className='flex items-center list-style-none'>
-            <li className='page-item'>
+          <ul className="flex items-center list-style-none">
+            <li className="page-item">
               <Link
                 // Classes para deshabilitado: // className='page-link relative block py-1.5 px-3 border-0 bg-transparent outline-none transition-all duration-300 rounded text-gray-500 pointer-events-none focus:shadow-none'
                 className={clsx(
@@ -50,7 +50,7 @@ export const Pagination = ({ totalPages }: Props) => {
                     'text-gray-800 hover:text-gray-800 hover:bg-gray-200':
                       currentPage >= 2,
                     'text-gray-400 pointer-events-none': currentPage < 2,
-                  }
+                  },
                 )}
                 href={createPageUrl(currentPage - 1)}
               >
@@ -73,7 +73,7 @@ export const Pagination = ({ totalPages }: Props) => {
                         currentPage !== page,
                       'bg-blue-600 text-white hover:text-white hover:bg-blue-700 shadow-md focus:shadow-md':
                         currentPage === page,
-                    }
+                    },
                   )}
                   href={createPageUrl(page)}
                 >
@@ -90,7 +90,7 @@ export const Pagination = ({ totalPages }: Props) => {
                 2 <span className='visually-hidden'></span>
               </Link>
             </li> */}
-            <li className='page-item'>
+            <li className="page-item">
               <Link
                 className={clsx(
                   'page-link relative block py-1.5 px-3 rounded border-0 bg-transparent outline-none transition-all duration-300 focus:shadow-none',
@@ -99,7 +99,7 @@ export const Pagination = ({ totalPages }: Props) => {
                       currentPage < totalPages,
                     'text-gray-400 pointer-events-none':
                       currentPage === totalPages,
-                  }
+                  },
                 )}
                 href={createPageUrl(currentPage + 1)}
               >

@@ -2,7 +2,5 @@
 import { ErrorComponent } from '@/components';
 
 export default function GenderNotFoundPage() {
-  return (
-    <ErrorComponent />
-  );
+  return <ErrorComponent />;
 }

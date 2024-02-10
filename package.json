@@ -7,7 +7,8 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "seed": "ts-node src/seed/seed-database.ts"
+    "seed": "ts-node src/seed/seed-database.ts",
+    "format": "prettier --write \"**/*.{js,jsx,ts,tsx,css,html}\""
   },
   "dependencies": {
     "@prisma/client": "^5.9.1",
@@ -23,10 +24,16 @@
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",
+    "@typescript-eslint/eslint-plugin": "^6.21.0",
+    "@typescript-eslint/parser": "^6.21.0",
     "autoprefixer": "^10.0.1",
     "eslint": "^8",
     "eslint-config-next": "14.1.0",
+    "eslint-config-prettier": "^9.0.0",
+    "eslint-plugin-prettier": "^5.0.0",
+    "eslint-plugin-react": "^7.33.2",
     "postcss": "^8",
+    "prettier": "^3.0.0",
     "prisma": "^5.9.1",
     "tailwindcss": "^3.3.0",
     "ts-node": "^10.9.2",

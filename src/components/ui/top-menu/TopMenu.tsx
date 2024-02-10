@@ -10,7 +10,7 @@ export const TopMenu = () => {
   const openSideMenu = useUIStore((state) => state.openSideMenu);
 
   return (
-    <nav className='flex px-5 justify-between items-center w-full'>
+    <nav className="flex px-5 justify-between items-center w-full">
       {/* Logo */}
       <div>
         <Link
@@ -25,47 +25,48 @@ export const TopMenu = () => {
       </div>
 
       {/* Center Menu */}
-      <div className='hidden sm:block'>
+      <div className="hidden sm:block">
         <Link
           href={'/gender/men'}
-          className={`m-2 p-2 rounded-md transition-all hover:bg-gray-100`}
+          className={'m-2 p-2 rounded-md transition-all hover:bg-gray-100'}
         >
           Hombres
         </Link>
         <Link
           href={'/gender/women'}
-          className={`m-2 p-2 rounded-md transition-all hover:bg-gray-100`}
+          className={'m-2 p-2 rounded-md transition-all hover:bg-gray-100'}
         >
           Mujeres
         </Link>
         <Link
           href={'/gender/kid'}
-          className={`m-2 p-2 rounded-md transition-all hover:bg-gray-100`}
+          className={'m-2 p-2 rounded-md transition-all hover:bg-gray-100'}
         >
           Niños
         </Link>
       </div>
 
       {/* Buttons */}
-      <div className='flex items-center'>
+      <div className="flex items-center">
         {/* Search */}
-        <Link href={'/search'} className='mx-2'>
-          <IoSearchOutline className='w-5 h-5' />
+        <Link href={'/search'} className="mx-2">
+          <IoSearchOutline className="w-5 h-5" />
         </Link>
 
         {/* Cart */}
-        <Link href={'/cart'} className='mx-2'>
-          <div className='relative'>
-            <span className='absolute text-xs rounded-full px-1 font-bold -top-2 -right-2 bg-blue-700 text-white'>
+        <Link href={'/cart'} className="mx-2">
+          <div className="relative">
+            <span className="absolute text-xs rounded-full px-1 font-bold -top-2 -right-2 bg-blue-700 text-white">
               3
             </span>
-            <IoCartOutline className='w-5 h-5' />
+            <IoCartOutline className="w-5 h-5" />
           </div>
         </Link>
 
         {/* Menú */}
-        <button className='m-2 p-2 rounded-md transition-all hover:bg-gray-100'
-        onClick={openSideMenu}
+        <button
+          className="m-2 p-2 rounded-md transition-all hover:bg-gray-100"
+          onClick={openSideMenu}
         >
           Menú
         </button>

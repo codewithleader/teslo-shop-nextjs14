@@ -25,11 +25,14 @@ async function main() {
 
   // 2.2 Products
   const categoriesDB = await prisma.category.findMany();
-  const categoriesMap = categoriesDB.reduce((map, category) => {
-    map[category.name.toLowerCase()] = category.id; // { shirt: 61bJkdn-askwlen2hdh2-3j3jkf }
+  const categoriesMap = categoriesDB.reduce(
+    (map, category) => {
+      map[category.name.toLowerCase()] = category.id; // { shirt: 61bJkdn-askwlen2hdh2-3j3jkf }
 
-    return map;
-  }, {} as Record<string, string>); // <string=shirt, string=categoryId>
+      return map;
+    },
+    {} as Record<string, string>,
+  ); // <string=shirt, string=categoryId>
 
   // console.log(categoriesMap); // { shirts: 'a655dfb1-163b-40e8-80c6-4bc21942a4a4', pants: '517cad1b-4152-47ac-8fe8-3c834a706a95', hoodies: '2b7f5b40-5f9d-40f8-8abb-1866de70d72f', hats: '8f39aa19-cae5-4d35-b02c-65e5a71fd2e7' }
 
