@@ -56,6 +56,13 @@ src/                              # Directorio sources (src)
   │       ├── components/         # Componentes específicos del módulo
   │       ├── hooks/              # Hooks personalizados del módulo
   │       └── utils/              # Funciones de utilidad del módulo
+  ├── config/                     # Configuraciones generales
+  │   └── fonts.ts                # Fuentes
+  ├── lib/                        # Cliente Prisma
+  │   └── prisma.ts               # Cliente Prisma
+  ├── store/                      # Zustand
+  │   └── ui/                     # Directorio para storage de interfaz de usuario con Zustand
+  │       └── ui-store.ts         # Zustand Storage
   ├── shared/                     # Componentes, hooks y utilidades compartidos
   │   ├── components/             # Componentes reutilizables
   │   ├── hooks/                  # Hooks comunes
