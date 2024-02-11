@@ -1,5 +1,6 @@
 import { titleFont } from '@/config/fonts';
 import Link from 'next/link';
+import { LoginForm } from './ui/LoginForm';
 
 export default function LoginPage() {
   return (
@@ -7,19 +8,7 @@ export default function LoginPage() {
       <h1 className={`${titleFont.className} text-4xl mb-5`}>Ingresar</h1>
 
       <div className="flex flex-col">
-        <label htmlFor="email">Correo electrónico</label>
-        <input
-          className="px-5 py-2 border bg-gray-200 rounded mb-5"
-          type="email"
-        />
-
-        <label htmlFor="email">Contraseña</label>
-        <input
-          className="px-5 py-2 border bg-gray-200 rounded mb-5"
-          type="email"
-        />
-
-        <button className="btn-primary">Ingresar</button>
+        <LoginForm />
 
         {/* divisor line */}
         <div className="flex items-center my-5">
