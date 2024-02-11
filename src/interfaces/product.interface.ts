@@ -25,3 +25,10 @@ export interface CartProduct {
   size: Size;
   image: string;
 }
+
+export interface SummaryInformation {
+  subTotal: number;
+  tax: number;
+  total: number;
+  itemsInCart: number;
+}
