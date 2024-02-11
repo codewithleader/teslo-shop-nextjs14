@@ -7,6 +7,10 @@ import { QuantitySelector } from '@/components';
 import { useEffect, useState } from 'react';
 
 export const ProductsInCart = () => {
+  const updateProductQuantity = useCartStore(
+    (state) => state.updateProductQuantity,
+  );
+  const removeProduct = useCartStore((state) => state.removeProduct);
   const productsInCart = useCartStore((state) => state.cart);
   const [isLoading, setIsLoading] = useState<boolean>(true);
 
@@ -43,9 +47,16 @@ export const ProductsInCart = () => {
             <p>${product.price}</p>
             <QuantitySelector
               quantity={product.quantity}
-              onQuantityChanged={console.log}
+              onQuantityChanged={(quantity) =>
+                updateProductQuantity(product, quantity)
+              }
             />
-            <button className="underline mt-3">Remover</button>
+            <button
+              onClick={() => removeProduct(product)}
+              className="underline mt-3"
+            >
+              Remover
+            </button>
           </div>
         </div>
       ))}

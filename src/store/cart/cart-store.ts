@@ -8,8 +8,8 @@ interface State {
   // methods
   getTotalItems: () => number;
   addProductToCart: (product: CartProduct) => void;
-  // updateProductQuantity:
-  // removeProduct:
+  updateProductQuantity: (product: CartProduct, quantity: number) => void;
+  removeProduct: (product: CartProduct) => void;
 }
 
 export const useCartStore = create<State>()(
@@ -41,6 +41,27 @@ export const useCartStore = create<State>()(
           }
           return item;
         });
+        set({ cart: updatedCartProducts });
+      },
+
+      updateProductQuantity: (product: CartProduct, quantity: number) => {
+        const { cart } = get();
+        // Sé que el producto existe por talla, tengo que actualizar el quantity
+        const updatedCartProducts = cart.map((item) => {
+          if (item.id === product.id && item.size === product.size) {
+            return { ...item, quantity };
+          }
+          return item;
+        });
+        set({ cart: updatedCartProducts });
+      },
+
+      removeProduct: (product: CartProduct) => {
+        const { cart } = get();
+        // Sé que el producto existe por talla, tengo que actualizar el quantity
+        const updatedCartProducts = cart.filter(
+          (item) => item.id !== product.id || item.size !== product.size,
+        );
         set({ cart: updatedCartProducts });
       },
     }),
