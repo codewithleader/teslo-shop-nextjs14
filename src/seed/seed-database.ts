@@ -6,6 +6,7 @@ async function main() {
   await prisma.productImage.deleteMany();
   await prisma.product.deleteMany();
   await prisma.category.deleteMany();
+  await prisma.user.deleteMany();
   // Para evitar el error "code: 'P2003'" no se puede usar el Promise.all()
   // await Promise.all([
   //   prisma.productImage.deleteMany(),
@@ -13,9 +14,13 @@ async function main() {
   //   prisma.category.deleteMany(),
   // ]);
 
-  const { categories, products } = initialData;
+  const { categories, products, users } = initialData;
 
   // 2. Insertar seed data
+  // Insert Users
+  await prisma.user.createMany({
+    data: users,
+  });
   // 2.1 Categories
   const categoriesData = categories.map((name) => ({ name }));
 
@@ -70,6 +75,6 @@ async function main() {
 
 (() => {
   if (process.env.NODE_ENV === 'production') return;
-  console.log(process.env.NODE_ENV);
+  console.log(process.env.NODE_ENV); // TODO: undefined: hay que ver como hacer que funcione
   main();
 })();
