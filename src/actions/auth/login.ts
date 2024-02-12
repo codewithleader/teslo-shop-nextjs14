@@ -21,6 +21,7 @@ export async function authenticate(
           return 'Something went wrong.';
       }
     }
+    console.error(error);
     // throw error;
   }
 }
