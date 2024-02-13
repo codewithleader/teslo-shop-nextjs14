@@ -15,27 +15,23 @@ import clsx from 'clsx';
 //
 import { SidebarLink, SidebarLinkProps } from './SidebarLink';
 import { useUIStore } from '@/store';
+import { logout } from '@/actions';
 
 const userMenuItems: SidebarLinkProps[] = [
   {
     title: 'Perfil',
-    path: '/',
+    path: '/profile',
     icon: <IoPersonOutline size={30} />,
   },
   {
     title: 'Ordenes',
-    path: '/',
+    path: '/orders',
     icon: <IoTicketOutline size={30} />,
   },
   {
     title: 'Ingresar',
-    path: '/',
+    path: '/auth/login',
     icon: <IoLogInOutline size={30} />,
-  },
-  {
-    title: 'Salir',
-    path: '/',
-    icon: <IoLogOutOutline size={30} />,
   },
 ];
 
@@ -108,6 +104,15 @@ export const Sidebar = () => {
         {userMenuItems.map((item) => (
           <SidebarLink key={item.title} {...item} />
         ))}
+
+        {/* Sign Out Button */}
+        <button
+          onClick={() => logout()}
+          className="flex w-full items-center mt-10 p-2 hover:bg-gray-100 rounded transition-all"
+        >
+          <IoLogOutOutline size={30} />
+          <span className="ml-3 text-xl">Salir</span>
+        </button>
 
         {/* Line separator */}
         <div className="w-full h-px bg-gray-200 my-10" />

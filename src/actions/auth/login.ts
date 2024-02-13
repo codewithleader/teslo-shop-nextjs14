@@ -10,8 +10,12 @@ export async function authenticate(
   formData: FormData,
 ) {
   try {
-    console.log(Object.fromEntries(formData));
-    await signIn('credentials', formData);
+    // console.log(Object.fromEntries(formData));
+    await signIn('credentials', {
+      ...Object.fromEntries(formData),
+      redirect: false,
+    });
+    return 'Success';
   } catch (error) {
     if (error instanceof AuthError) {
       switch (error.type) {
@@ -22,6 +26,6 @@ export async function authenticate(
       }
     }
     console.error(error);
-    // throw error;
+    throw error;
   }
 }

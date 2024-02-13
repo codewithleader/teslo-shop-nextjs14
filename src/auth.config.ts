@@ -27,8 +27,8 @@ export const authConfig: NextAuthConfig = {
         // Regresar el usuario
         // eslint-disable-next-line @typescript-eslint/no-unused-vars
         const { password: _, ...userWithoutPassword } = user;
-        console.log(userWithoutPassword);
-        return userWithoutPassword;
+        console.log({ userWithoutPassword });
+        return userWithoutPassword; // Quedaría "session: { user: userWithoutPassword, expires: '2024-03-13T15:58:47.816Z' }"
       },
     }),
   ],

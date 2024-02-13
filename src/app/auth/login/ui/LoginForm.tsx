@@ -1,14 +1,27 @@
 'use client';
 
-import { useState } from 'react';
-import { useFormState } from 'react-dom';
-import { IoEyeOffOutline, IoEyeOutline } from 'react-icons/io5';
+import { useEffect, useState } from 'react';
+import { useFormState, useFormStatus } from 'react-dom';
+import {
+  IoEyeOffOutline,
+  IoEyeOutline,
+  IoInformationOutline,
+} from 'react-icons/io5';
 import { authenticate } from '@/actions';
+import clsx from 'clsx';
+import { useRouter } from 'next/navigation';
 
 export const LoginForm = () => {
-  const [state, dispatch] = useFormState(authenticate, undefined);
+  const router = useRouter();
+  const [errorMessage, dispatch] = useFormState(authenticate, undefined);
   const [isEyeOpen, setIsEyeOpen] = useState(true);
-  console.log('LoginForm.tsx:', { state });
+  useEffect(() => {
+    if (errorMessage === 'Success') {
+      router.replace('/');
+    }
+  }, [errorMessage, router]);
+
+  console.log({ errorMessage });
   return (
     <form action={dispatch} className="flex flex-col">
       <label htmlFor="email">Correo electrónico</label>
@@ -39,9 +52,37 @@ export const LoginForm = () => {
         </button>
       </div>
 
-      <button type="submit" className="btn-primary">
-        Ingresar
-      </button>
+      <div
+        className="flex mb-2 h-8 items-end space-x-1"
+        aria-live="polite"
+        aria-atomic="true"
+      >
+        {errorMessage && (
+          <>
+            <IoInformationOutline className="h-5 w-5 text-red-500" />
+            <p className="text-sm text-red-500">Credenciales no válidas</p>
+          </>
+        )}
+      </div>
+
+      <LoginButton />
     </form>
   );
 };
+
+function LoginButton() {
+  const { pending } = useFormStatus();
+
+  return (
+    <button
+      type="submit"
+      className={clsx({
+        'btn-primary': !pending,
+        'btn-disabled': pending,
+      })}
+      disabled={pending}
+    >
+      Ingresar
+    </button>
+  );
+}
