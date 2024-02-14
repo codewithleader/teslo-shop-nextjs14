@@ -55,9 +55,10 @@ const adminMenuItems: SidebarLinkProps[] = [
 ];
 
 export const Sidebar = () => {
-  const { data: session } = useSession();
   const isSideMenuOpen = useUIStore((state) => state.isSideMenuOpen);
   const closeSideMenu = useUIStore((state) => state.closeSideMenu);
+  const { data: session } = useSession();
+  const isAuthenticated: boolean = !!session?.user;
 
   console.log({ session });
 
@@ -106,13 +107,13 @@ export const Sidebar = () => {
 
         {/* User Menu */}
         {userMenuItems
-          .filter((item) => !(item.path === '/auth/login' && session))
+          .filter((item) => !(item.path === '/auth/login' && isAuthenticated))
           .map((item) => (
             <SidebarLink key={item.title} {...item} />
           ))}
 
         {/* Sign Out Button */}
-        {session && (
+        {isAuthenticated && (
           <button
             onClick={() => logout()}
             className="flex w-full items-center mt-10 p-2 hover:bg-gray-100 rounded transition-all"

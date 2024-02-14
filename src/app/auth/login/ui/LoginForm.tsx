@@ -14,13 +14,14 @@ import {
 import { authenticate } from '@/actions';
 
 export const LoginForm = () => {
-  const { data: session } = useSession();
   const router = useRouter();
   const [errorMessage, dispatch] = useFormState(authenticate, undefined);
   const [isEyeOpen, setIsEyeOpen] = useState(true);
+  const { data: session } = useSession();
+  const isAuthenticated: boolean = !!session?.user;
   useEffect(() => {
-    if (session) router.replace('/');
-  }, [session, router]);
+    if (isAuthenticated) router.replace('/');
+  }, [isAuthenticated, router]);
 
   useEffect(() => {
     if (errorMessage === 'Success') router.replace('/');
