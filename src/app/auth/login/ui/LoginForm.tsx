@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import { useFormState, useFormStatus } from 'react-dom';
+import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
 import clsx from 'clsx';
 import {
@@ -13,13 +14,16 @@ import {
 import { authenticate } from '@/actions';
 
 export const LoginForm = () => {
+  const { data: session } = useSession();
   const router = useRouter();
   const [errorMessage, dispatch] = useFormState(authenticate, undefined);
   const [isEyeOpen, setIsEyeOpen] = useState(true);
   useEffect(() => {
-    if (errorMessage === 'Success') {
-      router.replace('/');
-    }
+    if (session) router.replace('/');
+  }, [session, router]);
+
+  useEffect(() => {
+    if (errorMessage === 'Success') router.replace('/');
   }, [errorMessage, router]);
 
   return (

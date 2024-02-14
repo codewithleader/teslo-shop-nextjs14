@@ -55,7 +55,7 @@ const adminMenuItems: SidebarLinkProps[] = [
 ];
 
 export const Sidebar = () => {
-  const { data: session, status, update } = useSession();
+  const { data: session } = useSession();
   const isSideMenuOpen = useUIStore((state) => state.isSideMenuOpen);
   const closeSideMenu = useUIStore((state) => state.closeSideMenu);
 
@@ -105,18 +105,22 @@ export const Sidebar = () => {
         {/* Menu */}
 
         {/* User Menu */}
-        {userMenuItems.map((item) => (
-          <SidebarLink key={item.title} {...item} />
-        ))}
+        {userMenuItems
+          .filter((item) => !(item.path === '/auth/login' && session))
+          .map((item) => (
+            <SidebarLink key={item.title} {...item} />
+          ))}
 
         {/* Sign Out Button */}
-        <button
-          onClick={() => logout()}
-          className="flex w-full items-center mt-10 p-2 hover:bg-gray-100 rounded transition-all"
-        >
-          <IoLogOutOutline size={30} />
-          <span className="ml-3 text-xl">Salir</span>
-        </button>
+        {session && (
+          <button
+            onClick={() => logout()}
+            className="flex w-full items-center mt-10 p-2 hover:bg-gray-100 rounded transition-all"
+          >
+            <IoLogOutOutline size={30} />
+            <span className="ml-3 text-xl">Salir</span>
+          </button>
+        )}
 
         {/* Line separator */}
         <div className="w-full h-px bg-gray-200 my-10" />
