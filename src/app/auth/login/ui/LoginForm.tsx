@@ -2,8 +2,6 @@
 
 import { useEffect, useState } from 'react';
 import { useFormState, useFormStatus } from 'react-dom';
-import { useSession } from 'next-auth/react';
-import { useRouter } from 'next/navigation';
 import clsx from 'clsx';
 import {
   IoEyeOffOutline,
@@ -14,18 +12,12 @@ import {
 import { authenticate } from '@/actions';
 
 export const LoginForm = () => {
-  const router = useRouter();
   const [errorMessage, dispatch] = useFormState(authenticate, undefined);
   const [isEyeOpen, setIsEyeOpen] = useState(true);
-  const { data: session } = useSession();
-  const isAuthenticated: boolean = !!session?.user;
-  useEffect(() => {
-    if (isAuthenticated) router.replace('/');
-  }, [isAuthenticated, router]);
 
   useEffect(() => {
-    if (errorMessage === 'Success') router.replace('/');
-  }, [errorMessage, router]);
+    if (errorMessage === 'Success') window.location.replace('/');
+  }, [errorMessage]);
 
   return (
     <form action={dispatch} className="flex flex-col">

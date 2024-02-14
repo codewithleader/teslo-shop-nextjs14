@@ -7,7 +7,7 @@ export default async function AuthLayout({
   children: React.ReactNode;
 }) {
   const session = await authMiddleware();
-  console.log({ session });
+  console.log('Session Elis src/app/auth/layout.tsx:', { session });
   if (session?.user) {
     redirect('/');
   }

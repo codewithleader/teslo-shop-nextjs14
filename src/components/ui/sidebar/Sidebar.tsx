@@ -29,11 +29,6 @@ const userMenuItems: SidebarLinkProps[] = [
     path: '/orders',
     icon: <IoTicketOutline size={30} />,
   },
-  {
-    title: 'Ingresar',
-    path: '/auth/login',
-    icon: <IoLogInOutline size={30} />,
-  },
 ];
 
 const adminMenuItems: SidebarLinkProps[] = [
@@ -59,8 +54,7 @@ export const Sidebar = () => {
   const closeSideMenu = useUIStore((state) => state.closeSideMenu);
   const { data: session } = useSession();
   const isAuthenticated: boolean = !!session?.user;
-
-  console.log({ session });
+  const isAdmin: boolean = session?.user.role === 'admin';
 
   return (
     <div>
@@ -106,11 +100,19 @@ export const Sidebar = () => {
         {/* Menu */}
 
         {/* User Menu */}
-        {userMenuItems
-          .filter((item) => !(item.path === '/auth/login' && isAuthenticated))
-          .map((item) => (
+        {isAuthenticated &&
+          userMenuItems.map((item) => (
             <SidebarLink key={item.title} {...item} />
           ))}
+
+        {/* Sign In Button */}
+        {!isAuthenticated && (
+          <SidebarLink
+            title="Ingresar"
+            path="/auth/login"
+            icon={<IoLogInOutline size={30} />}
+          />
+        )}
 
         {/* Sign Out Button */}
         {isAuthenticated && (
@@ -123,73 +125,17 @@ export const Sidebar = () => {
           </button>
         )}
 
-        {/* Line separator */}
-        <div className="w-full h-px bg-gray-200 my-10" />
+        {isAdmin && (
+          <>
+            {/* Line separator */}
+            <div className="w-full h-px bg-gray-200 my-10" />
 
-        {/* Admin Menu */}
-        {adminMenuItems.map((item) => (
-          <SidebarLink key={item.title} {...item} />
-        ))}
-        {/* <Link
-          href={'/'}
-          className='flex items-center mt-10 p-2 hover:bg-gray-100 rounded transition-all'
-        >
-          <IoPersonOutline size={30} />
-          <span className='ml-3 text-xl'>Perfil</span>
-        </Link>
-
-        <Link
-          href={'/'}
-          className='flex items-center mt-10 p-2 hover:bg-gray-100 rounded transition-all'
-        >
-          <IoTicketOutline size={30} />
-          <span className='ml-3 text-xl'>Ordenes</span>
-        </Link>
-
-        <Link
-          href={'/'}
-          className='flex items-center mt-10 p-2 hover:bg-gray-100 rounded transition-all'
-        >
-          <IoLogInOutline size={30} />
-          <span className='ml-3 text-xl'>Ingresar</span>
-        </Link>
-
-        <Link
-          href={'/'}
-          className='flex items-center mt-10 p-2 hover:bg-gray-100 rounded transition-all'
-        >
-          <IoLogOutOutline size={30} />
-          <span className='ml-3 text-xl'>Salir</span>
-        </Link> */}
-
-        {/* Line separator */}
-        {/* <div className='w-full h-px bg-gray-200 my-10' /> */}
-
-        {/* Admin Menu */}
-
-        {/* <Link
-          href={'/'}
-          className='flex items-center mt-10 p-2 hover:bg-gray-100 rounded transition-all'
-        >
-          <IoShirtOutline size={30} />
-          <span className='ml-3 text-xl'>Productos</span>
-        </Link>
-
-        <Link
-          href={'/'}
-          className='flex items-center mt-10 p-2 hover:bg-gray-100 rounded transition-all'
-        >
-          <IoTicketOutline size={30} />
-          <span className='ml-3 text-xl'>Ordenes</span>
-        </Link>
-
-        <Link
-          href={'/'}
-          className='flex items-center mt-10 p-2 hover:bg-gray-100 rounded transition-all'
-        >
-          <IoPersonOutline size={30} />
-          <span className='ml-3 text-xl'>Usuarios</span>
-        </Link> */}
+            {/* Admin Menu */}
+            {adminMenuItems.map((item) => (
+              <SidebarLink key={item.title} {...item} />
+            ))}
+          </>
+        )}
       </nav>
     </div>
   );

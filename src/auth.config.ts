@@ -1,5 +1,4 @@
-import NextAuth, { User, type NextAuthConfig } from 'next-auth';
-import { AdapterUser } from 'next-auth/adapters';
+import NextAuth, { type NextAuthConfig } from 'next-auth';
 import credentials from 'next-auth/providers/credentials';
 import prisma from './lib/prisma';
 import bcryptjs from 'bcryptjs';
@@ -12,15 +11,16 @@ export const authConfig: NextAuthConfig = {
   },
   callbacks: {
     jwt({ token, user }) {
-      console.log('jwt Elis:', { token, user });
+      // console.log('jwt Elis:', { token, user });
       if (user) {
         token.data = user;
       }
       return token;
     },
 
-    session({ session, token, user }) {
-      console.log('session Elis:', { session, token, user });
+    session({ session, token }) {
+      // console.log('session Elis:', { session, token });
+
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       session.user = token.data as any;
       return session;
