@@ -15,3 +15,6 @@ export * from './ui/footer/Footer';
 export * from './ui/pagination/Pagination';
 
 export * from './product/stock-label/StockLabel';
+
+// SessionProvider
+export * from './provider/Provider';

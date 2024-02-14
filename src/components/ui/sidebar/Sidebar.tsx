@@ -16,6 +16,7 @@ import clsx from 'clsx';
 import { SidebarLink, SidebarLinkProps } from './SidebarLink';
 import { useUIStore } from '@/store';
 import { logout } from '@/actions';
+import { useSession } from 'next-auth/react';
 
 const userMenuItems: SidebarLinkProps[] = [
   {
@@ -54,8 +55,11 @@ const adminMenuItems: SidebarLinkProps[] = [
 ];
 
 export const Sidebar = () => {
+  const { data: session, status, update } = useSession();
   const isSideMenuOpen = useUIStore((state) => state.isSideMenuOpen);
   const closeSideMenu = useUIStore((state) => state.closeSideMenu);
+
+  console.log({ session });
 
   return (
     <div>
