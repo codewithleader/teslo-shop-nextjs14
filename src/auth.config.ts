@@ -1,4 +1,5 @@
-import NextAuth, { type NextAuthConfig } from 'next-auth';
+import NextAuth, { User, type NextAuthConfig } from 'next-auth';
+import { AdapterUser } from 'next-auth/adapters';
 import credentials from 'next-auth/providers/credentials';
 import prisma from './lib/prisma';
 import bcryptjs from 'bcryptjs';
@@ -8,6 +9,22 @@ export const authConfig: NextAuthConfig = {
   pages: {
     signIn: '/auth/login',
     newUser: '/auth/new-account',
+  },
+  callbacks: {
+    jwt({ token, user }) {
+      console.log('jwt Elis:', { token, user });
+      if (user) {
+        token.data = user;
+      }
+      return token;
+    },
+
+    session({ session, token, user }) {
+      console.log('session Elis:', { session, token, user });
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      session.user = token.data as any;
+      return session;
+    },
   },
   providers: [
     credentials({
@@ -27,7 +44,7 @@ export const authConfig: NextAuthConfig = {
         // Regresar el usuario
         // eslint-disable-next-line @typescript-eslint/no-unused-vars
         const { password: _, ...userWithoutPassword } = user;
-        console.log({ userWithoutPassword });
+
         return userWithoutPassword; // Quedaría "session: { user: userWithoutPassword, expires: '2024-03-13T15:58:47.816Z' }"
       },
     }),
