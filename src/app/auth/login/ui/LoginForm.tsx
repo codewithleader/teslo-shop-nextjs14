@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import { useFormState, useFormStatus } from 'react-dom';
+import { useSearchParams } from 'next/navigation';
 import clsx from 'clsx';
 import {
   IoEyeOffOutline,
@@ -14,10 +15,12 @@ import { authenticate } from '@/actions';
 export const LoginForm = () => {
   const [errorMessage, dispatch] = useFormState(authenticate, undefined);
   const [isEyeOpen, setIsEyeOpen] = useState(true);
+  const searchParams = useSearchParams();
+  const callbackUrl = searchParams.get('callbackUrl') || '/';
 
   useEffect(() => {
-    if (errorMessage === 'Success') window.location.replace('/');
-  }, [errorMessage]);
+    if (errorMessage === 'Success') window.location.replace(callbackUrl);
+  }, [errorMessage, callbackUrl]);
 
   return (
     <form action={dispatch} className="flex flex-col">
