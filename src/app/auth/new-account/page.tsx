@@ -1,5 +1,6 @@
 import { titleFont } from '@/config/fonts';
 import Link from 'next/link';
+import { RegisterForm } from './ui/RegisterForm';
 
 export default function NewAccountPage() {
   return (
@@ -7,29 +8,7 @@ export default function NewAccountPage() {
       <h1 className={`${titleFont.className} text-4xl mb-5`}>Nueva cuenta</h1>
 
       <div className="flex flex-col">
-        <label htmlFor="name">Nombre completo</label>
-        <input
-          className="px-5 py-2 border bg-gray-200 rounded mb-5"
-          type="text"
-          id="name"
-        />
-
-        <label htmlFor="email">Correo electrónico</label>
-        <input
-          className="px-5 py-2 border bg-gray-200 rounded mb-5"
-          type="email"
-          id="email"
-        />
-
-        <label htmlFor="password">Contraseña</label>
-        <input
-          className="px-5 py-2 border bg-gray-200 rounded mb-5"
-          type="email"
-          id="password"
-        />
-
-        <button className="btn-primary">Crear cuenta</button>
-
+        <RegisterForm />
         {/* divisor line */}
         <div className="flex items-center my-5">
           <div className="flex-1 border-t border-gray-500"></div>

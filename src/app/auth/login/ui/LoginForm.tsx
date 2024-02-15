@@ -25,14 +25,16 @@ export const LoginForm = () => {
       <input
         className="px-5 py-2 border bg-gray-200 rounded mb-5"
         type="email"
+        id="email"
         name="email" // 👀 obligatorio el name para que no de error en @/actions/auth/login.ts
       />
 
-      <label htmlFor="email">Contraseña</label>
+      <label htmlFor="password">Contraseña</label>
       <div className="relative flex items-center mb-5">
         <input
           className="px-5 py-2 border bg-gray-200 rounded w-full pr-10"
           type={isEyeOpen ? 'text' : 'password'}
+          id="password"
           name="password"
         />
         <button
