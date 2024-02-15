@@ -4,12 +4,45 @@ import prisma from './lib/prisma';
 import bcryptjs from 'bcryptjs';
 import { z } from 'zod';
 
+const privateRoutes = [
+  '/admin',
+  '/checkout',
+  '/checkout/address',
+  '/profile',
+  '/orders',
+  '/orders/[id]',
+];
+
+// const authRoutes = ['/auth/login', '/auth/new-account'];
+
+function isOnPrivateRoute(pathname: string) {
+  return privateRoutes.some((route) => {
+    // Convertir rutas como '/orders/[id]' en una expresión regular
+    const routeRegex = new RegExp(
+      '^' + route.replace(/\[.*?\]/g, '[^/]+') + '$',
+    );
+    return routeRegex.test(pathname);
+  });
+}
+
 export const authConfig: NextAuthConfig = {
   pages: {
     signIn: '/auth/login',
     newUser: '/auth/new-account',
   },
   callbacks: {
+    authorized({ auth, request: { nextUrl } }) {
+      const pathname = nextUrl.pathname;
+      const isLoggedIn = !!auth?.user;
+      console.log({ pathname });
+
+      if (isOnPrivateRoute(pathname)) {
+        if (isLoggedIn) return true;
+        return false;
+      }
+      return true;
+    },
+
     jwt({ token, user }) {
       // console.log('jwt Elis:', { token, user });
       if (user) {
