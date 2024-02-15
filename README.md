@@ -23,6 +23,7 @@ Optimizar imagenes con sharp
 7. Run project `npm run dev`
 
 Open [http://localhost:7777](http://localhost:7777) with your browser to see the result.
+Show database ```npx prisma studio``` (alternativa a TablePlus o PGAdmin)
 
 # Icons
 
