@@ -1,9 +1,11 @@
 'use client';
 
-import clsx from 'clsx';
 import { useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { IoEyeOffOutline, IoEyeOutline } from 'react-icons/io5';
+import clsx from 'clsx';
+//
+import { login, registerUser } from '@/actions';
 
 type FormInputs = {
   name: string;
@@ -13,6 +15,7 @@ type FormInputs = {
 
 export const RegisterForm = () => {
   const [isEyeOpen, setIsEyeOpen] = useState(true);
+  const [errorMessage, setErrorMessage] = useState('');
   // Form
   const {
     register,
@@ -21,8 +24,16 @@ export const RegisterForm = () => {
   } = useForm<FormInputs>();
 
   const onSubmit: SubmitHandler<FormInputs> = async (data) => {
+    setErrorMessage('');
     const { name, email, password } = data;
-    console.log({ name, email, password });
+    const res = await registerUser(name, email, password);
+    if (!res.ok) {
+      setErrorMessage(res.message);
+      return;
+    }
+    await login(email.toLowerCase(), password);
+
+    window.location.replace('/');
   };
 
   return (
@@ -79,7 +90,7 @@ export const RegisterForm = () => {
           )}
         </button>
       </div>
-
+      <span className="text-red-500">{errorMessage}</span>
       <button className="btn-primary">Crear cuenta</button>
     </form>
   );
