@@ -19,7 +19,7 @@ export const registerUser = async (
         id: true,
         name: true,
         email: true,
-      }
+      },
     });
     return {
       ok: true,
