@@ -48,7 +48,6 @@ export const getPaginatedProductsWithImages = async ({
       currentPage: page,
       totalPages,
       products: products.map(
-        // eslint-disable-next-line @typescript-eslint/no-unused-vars
         ({ categoryId, category, ProductImage, ...product }) => ({
           ...product,
           images: ProductImage.map((img) => img.url),

@@ -42,9 +42,7 @@ export const authConfig: NextAuthConfig = {
         // Comparar las contraseñas
         if (!bcryptjs.compareSync(password, user.password)) return null;
         // Regresar el usuario
-        // eslint-disable-next-line @typescript-eslint/no-unused-vars
         const { password: _, ...userWithoutPassword } = user;
-
         return userWithoutPassword; // Quedaría "session: { user: userWithoutPassword, expires: '2024-03-13T15:58:47.816Z' }"
       },
     }),
