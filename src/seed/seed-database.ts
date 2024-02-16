@@ -1,12 +1,16 @@
 import prisma from '../lib/prisma';
 import { initialData } from './seed';
+import { countries } from './seed-countries';
 
 async function main() {
   // 1. Borrar registros previos
+  await prisma.user.deleteMany();
+  await prisma.country.deleteMany();
+
   await prisma.productImage.deleteMany();
   await prisma.product.deleteMany();
   await prisma.category.deleteMany();
-  await prisma.user.deleteMany();
+
   // Para evitar el error "code: 'P2003'" no se puede usar el Promise.all()
   // await Promise.all([
   //   prisma.productImage.deleteMany(),
@@ -21,14 +25,17 @@ async function main() {
   await prisma.user.createMany({
     data: users,
   });
-  // 2.1 Categories
+
+  await prisma.country.createMany({
+    data: countries,
+  });
+
   const categoriesData = categories.map((name) => ({ name }));
 
   await prisma.category.createMany({
     data: categoriesData,
   });
 
-  // 2.2 Products
   const categoriesDB = await prisma.category.findMany();
   const categoriesMap = categoriesDB.reduce(
     (map, category) => {
