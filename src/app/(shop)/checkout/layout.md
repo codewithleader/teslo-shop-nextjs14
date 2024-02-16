@@ -12,3 +12,6 @@ export default async function CheckoutLayout({
   }
   return <>{children}</>;
 }
+
+
+<!-- TODO: esto es para cuando el middleware.ts no funcione pero en esta version si funciona asi que no es necesario para la authenticacion -->
