@@ -8,7 +8,7 @@ import {
 } from '@/components';
 import { titleFont } from '@/config/fonts';
 import { getProductBySlug } from '@/actions';
-import {
+import type {
   Metadata,
   //  ResolvingMetadata
 } from 'next';

@@ -4,7 +4,7 @@ import { redirect } from 'next/navigation';
 //
 import { Pagination, ProductGrid, Title } from '@/components';
 import { getPaginatedProductsWithImages } from '@/actions';
-import { Gender } from '@prisma/client';
+import type { Gender } from '@prisma/client';
 
 interface Props {
   searchParams: {

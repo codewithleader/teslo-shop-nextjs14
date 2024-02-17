@@ -1,7 +1,7 @@
 'use server';
 // import { Type } from '@/interfaces';
 import prisma from '@/lib/prisma';
-import { Gender } from '@prisma/client';
+import type { Gender } from '@prisma/client';
 
 interface PaginationOptions {
   page?: number;

@@ -1,11 +1,14 @@
 'use client';
 
+import { useEffect } from 'react';
+import { useRouter } from 'next/navigation';
+import { useSession } from 'next-auth/react';
 import { useForm } from 'react-hook-form';
 import clsx from 'clsx';
 //
-import { Country } from '@/interfaces';
+import type { Address, Country } from '@/interfaces';
 import { useAddressStore } from '@/store';
-import { useEffect } from 'react';
+import { deleteUserAddress, setUserAddress } from '@/actions';
 
 type FormInputs = {
   firstName: string;
@@ -14,16 +17,18 @@ type FormInputs = {
   address2?: string;
   postalCode: string;
   city: string;
-  country: string;
+  country: string; // this is a countryId like: "US"
   phone: string;
   rememberAddress: boolean;
 };
 
 interface Props {
   countries: Country[];
+  userDBAddress?: Partial<Address>;
 }
 
-export const AddressForm = ({ countries }: Props) => {
+export const AddressForm = ({ countries, userDBAddress = {} }: Props) => {
+  const router = useRouter();
   const {
     handleSubmit,
     register,
@@ -31,23 +36,38 @@ export const AddressForm = ({ countries }: Props) => {
     reset,
   } = useForm<FormInputs>({
     defaultValues: {
-      // todo: leer de la db
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      ...(userDBAddress as any),
+      rememberAddress: false,
     },
+  });
+
+  const { data: session } = useSession({
+    required: true, // si no está autenticado lo redirecciona al login
   });
 
   const setAddress = useAddressStore((state) => state.setAddress);
   const shippingAddress = useAddressStore((state) => state.shippingAddress);
-
-  const onSubmit = (data: FormInputs) => {
-    const { rememberAddress, ...shippingAddress } = data;
-    setAddress(shippingAddress);
-  };
 
   useEffect(() => {
     if (shippingAddress.firstName) {
       reset(shippingAddress);
     }
   }, [reset, shippingAddress]);
+
+  const onSubmit = async (data: FormInputs) => {
+    const { rememberAddress, ...shippingAddress } = data;
+    setAddress(shippingAddress);
+    if (rememberAddress) {
+      await setUserAddress(shippingAddress, session!.user.id);
+    } else {
+      // verify if exists and delete
+      if (userDBAddress.firstName) {
+        await deleteUserAddress(session!.user.id);
+      }
+    }
+    router.push('/checkout');
+  };
 
   return (
     <form

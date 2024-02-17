@@ -4,7 +4,7 @@ import { useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 //
-import { Product } from '@/interfaces';
+import type { Product } from '@/interfaces';
 
 interface Props {
   product: Product;

@@ -1,7 +1,7 @@
 import { titleFont } from '@/config/fonts';
 import Image from 'next/image';
 import Link from 'next/link';
-import { ErrorCodeNumber } from './types';
+import type { ErrorCodeNumber } from './types';
 
 interface Props {
   message?: string;

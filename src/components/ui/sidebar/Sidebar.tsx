@@ -13,7 +13,7 @@ import {
 } from 'react-icons/io5';
 import clsx from 'clsx';
 //
-import { SidebarLink, SidebarLinkProps } from './SidebarLink';
+import { SidebarLink, type SidebarLinkProps } from './SidebarLink';
 import { useUIStore } from '@/store';
 import { logout } from '@/actions';
 import { useSession } from 'next-auth/react';

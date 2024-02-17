@@ -13,7 +13,8 @@
   "parser": "@typescript-eslint/parser",
   "parserOptions": {
     "ecmaVersion": "latest",
-    "sourceType": "module"
+    "sourceType": "module",
+    "project": "./tsconfig.json"
   },
   "plugins": ["@typescript-eslint", "react", "prettier"],
   "rules": {
@@ -26,6 +27,9 @@
         "prefer": "type-imports",
         "disallowTypeAnnotations": false
       }
-    ]
+    ],
+    "require-await": "off",
+    "@typescript-eslint/require-await": "error",
+    "@typescript-eslint/await-thenable": "error"
   }
 }
