@@ -5,6 +5,7 @@ import Image from 'next/image';
 import { useCartStore } from '@/store';
 import { QuantitySelector } from '@/components';
 import { useEffect, useState } from 'react';
+import { redirect } from 'next/navigation';
 
 export const ProductsInCart = () => {
   const updateProductQuantity = useCartStore(
@@ -17,6 +18,11 @@ export const ProductsInCart = () => {
   useEffect(() => {
     setIsLoading(false);
   }, []);
+
+  useEffect(() => {
+    if (!isLoading && productsInCart.length === 0) redirect('/empty');
+  }, [isLoading, productsInCart]);
+
   if (isLoading) {
     return <p>Loading...</p>;
   }

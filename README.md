@@ -20,7 +20,8 @@ Optimizar imagenes con sharp
 4. Build database `docker compose up -d`
 5. Run migrations `npx prisma migrate dev`
 6. Run seed `npm run seed`
-7. Run project `npm run dev`
+7. Clear browser localStorage
+8. Run project `npm run dev`
 
 Open [http://localhost:7777](http://localhost:7777) with your browser to see the result.
 
