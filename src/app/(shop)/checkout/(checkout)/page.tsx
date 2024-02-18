@@ -1,6 +1,7 @@
 import { Title } from '@/components';
 import Link from 'next/link';
 import { ProductsInCart } from './ui/ProductsInCart';
+import { PlaceOrder } from './ui/PlaceOrder';
 
 export default function CheckoutPage() {
   return (
@@ -22,61 +23,7 @@ export default function CheckoutPage() {
             <ProductsInCart />
           </div>
 
-          <div className="flex flex-col mt-5">
-            <hr className="border-gray-300 border-2 md:hidden" />
-            {/* Summary */}
-
-            <div className="md:bg-white md:rounded-xl md:shadow-xl p-10 lg:ml-28">
-              {/* Address */}
-              <h2 className="font-bold text-2xl mb-2">Dirección de entrega</h2>
-              <div className="mb-10">
-                <p className="text-xl">Antonio Perez</p>
-                <p>Main Street, South River Ave.</p>
-                <p>Center 123</p>
-                <p>Palos Rojos City</p>
-                <p>Zip 123123</p>
-                <p>555 2223344</p>
-              </div>
-
-              {/* Divider */}
-              <div className="w-full h-0.5 rounded bg-gray-300 md:bg-gray-200 mb-10" />
-
-              <h2 className="text-2xl mb-2">Resumen de orden</h2>
-              <div className="grid grid-cols-2">
-                <span>Nro. Productos</span>
-                <span className="text-right">3 artículos</span>
-                <span>Subtotal</span>
-                <span className="text-right">$ 100</span>
-                <span>Impuestos (15%)</span>
-                <span className="text-right">$ 100</span>
-                <span className="mt-5 text-2xl">Total</span>
-                <span className="mt-5 text-2xl text-right">$ 100</span>
-              </div>
-
-              <div className="mt-5 mb-2 w-full">
-                <p className="mb-5">
-                  {/* Disclaimer */}
-                  <span className="text-xs">
-                    Al hacer clic en &quot;Colocar orden&quot;, aceptas nuestros{' '}
-                    <a href="#" className="underline">
-                      términos y condiciones
-                    </a>{' '}
-                    y{' '}
-                    <a href="#" className="underline">
-                      política de privacidad
-                    </a>
-                  </span>
-                </p>
-
-                <Link
-                  className="flex btn-primary justify-center"
-                  href={'/orders/123'}
-                >
-                  Colocar orden
-                </Link>
-              </div>
-            </div>
-          </div>
+          <PlaceOrder />
           {/* End Summary */}
         </div>
       </div>

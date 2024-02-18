@@ -24,7 +24,7 @@ export const ProductsInCart = () => {
   }, [isLoading, productsInCart]);
 
   if (isLoading) {
-    return <p>Loading...</p>;
+    return <p>Cargando...</p>;
   }
 
   return (

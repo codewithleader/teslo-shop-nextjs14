@@ -14,7 +14,7 @@ export const OrderSummary = () => {
     setIsLoading(false);
   }, []);
   if (isLoading) {
-    return <p>Loading...</p>;
+    return <p>Cargango...</p>;
   }
   return (
     <>
