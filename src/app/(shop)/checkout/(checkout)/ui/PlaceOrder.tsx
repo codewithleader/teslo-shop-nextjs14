@@ -5,7 +5,7 @@ import clsx from 'clsx';
 //
 import { placeOrder } from '@/actions';
 import { useAddressStore, useCartStore } from '@/store';
-import { currencyFormat, sleep } from '@/utils';
+import { currencyFormat } from '@/utils';
 
 export const PlaceOrder = () => {
   const [isLoading, setIsLoading] = useState(true);
@@ -37,14 +37,14 @@ export const PlaceOrder = () => {
 
   const onPlaceOrder = async () => {
     setIsPlacingOrder(true);
-    await sleep(2);
     const productToOrder = cart.map((product) => ({
       productId: product.id,
       quantity: product.quantity,
       size: product.size,
     }));
     const res = await placeOrder(productToOrder, shippingAddress);
-    console.log('🚀 - file: PlaceOrder.tsx:47 - onPlaceOrder - res:', res);
+    console.log('🚀 - file: PlaceOrder.tsx:46 - onPlaceOrder - res:', res);
+    setIsPlacingOrder(false);
   };
 
   return (
