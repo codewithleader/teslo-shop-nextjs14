@@ -14,6 +14,7 @@ export const placeOrder = async (
   productIds: ProductToOrder[],
   address: Address,
 ) => {
+  console.log('🚀 - file: place-order.ts:17 - address:', address);
   // Verify user session
   const session = await authMiddleware();
   const userId = session?.user.id;
@@ -72,6 +73,8 @@ export const placeOrder = async (
         total,
         // isPaid: false, // por defecto es falso si no se agrega
 
+        // Nota: Aquí tambien se podía hacer la orderAddress pero se decidió hacerlo aparte con fines educativos.
+
         OrderItem: {
           createMany: {
             data: productIds.map((p) => ({
@@ -93,9 +96,36 @@ export const placeOrder = async (
     // todo: Validar si el price es cero lanzar error
 
     // 3. Crear la dirección de la orden
+    const {
+      country: countryId,
+      firstName,
+      lastName,
+      address: addrss,
+      address2,
+      postalCode,
+      city,
+      phone,
+    } = address;
+    const orderAddress = await tx.orderAddress.create({
+      data: {
+        countryId,
+        orderId: order.id,
+        firstName,
+        lastName,
+        address: addrss,
+        address2,
+        postalCode,
+        city,
+        phone,
+        // ...restAddress,
+        // countryId,
+        // orderId: order.id,
+      },
+    });
 
     return {
       order,
+      orderAddress,
     };
   });
 };

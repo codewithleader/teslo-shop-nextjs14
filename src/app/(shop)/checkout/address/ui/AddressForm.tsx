@@ -6,9 +6,9 @@ import { useSession } from 'next-auth/react';
 import { useForm } from 'react-hook-form';
 import clsx from 'clsx';
 //
-import type { Address, Country } from '@/interfaces';
 import { useAddressStore } from '@/store';
 import { deleteUserAddress, setUserAddress } from '@/actions';
+import type { Address, Country, UserAddress } from '@/interfaces';
 
 type FormInputs = {
   firstName: string;
@@ -24,10 +24,11 @@ type FormInputs = {
 
 interface Props {
   countries: Country[];
-  userDBAddress?: Partial<Address>;
+  userDbAddress?: Partial<UserAddress>;
 }
 
-export const AddressForm = ({ countries, userDBAddress = {} }: Props) => {
+export const AddressForm = ({ countries, userDbAddress = {} }: Props) => {
+  const { userId, ...restUserDbAddress } = userDbAddress;
   const router = useRouter();
   const {
     handleSubmit,
@@ -36,8 +37,7 @@ export const AddressForm = ({ countries, userDBAddress = {} }: Props) => {
     reset,
   } = useForm<FormInputs>({
     defaultValues: {
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      ...(userDBAddress as any),
+      ...restUserDbAddress,
       rememberAddress: false,
     },
   });
@@ -56,13 +56,14 @@ export const AddressForm = ({ countries, userDBAddress = {} }: Props) => {
   }, [reset, shippingAddress]);
 
   const onSubmit = async (data: FormInputs) => {
-    const { rememberAddress, ...shippingAddress } = data;
-    setAddress(shippingAddress);
+    const { rememberAddress, ...address } = data;
+    console.log('🚀 - file: AddressForm.tsx:60 - onSubmit - address:', address);
+    setAddress(address);
     if (rememberAddress) {
-      await setUserAddress(shippingAddress, session!.user.id);
+      await setUserAddress(address, session!.user.id);
     } else {
       // verify if exists and delete
-      if (userDBAddress.firstName) {
+      if (userDbAddress.firstName) {
         await deleteUserAddress(session!.user.id);
       }
     }
