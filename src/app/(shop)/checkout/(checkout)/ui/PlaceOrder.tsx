@@ -3,6 +3,7 @@
 import { useEffect, useState } from 'react';
 import clsx from 'clsx';
 //
+import { placeOrder } from '@/actions';
 import { useAddressStore, useCartStore } from '@/store';
 import { currencyFormat, sleep } from '@/utils';
 
@@ -42,7 +43,8 @@ export const PlaceOrder = () => {
       quantity: product.quantity,
       size: product.size,
     }));
-    console.log({ shippingAddress, productToOrder });
+    const res = await placeOrder(productToOrder, shippingAddress);
+    console.log('🚀 - file: PlaceOrder.tsx:47 - onPlaceOrder - res:', res);
   };
 
   return (
