@@ -145,6 +145,9 @@ model Order {
 
   // OneToOne
   OrderAddress OrderAddress?
+
+  // Paypal. Si se tienen varias pasarelas seria transactionPaypalId, transactionMercadoPagoId, transactionStripeId...
+  transactionId String?
 }
 
 model OrderItem {

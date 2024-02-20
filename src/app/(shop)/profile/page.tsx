@@ -6,8 +6,7 @@ import { redirect } from 'next/navigation';
 export default async function ProfilePage() {
   const session = await authMiddleware();
   if (!session?.user) {
-    // redirect('/auth/login?returnTo=/profile'); // no hay que poner return porque la función redirect devuelve "never"
-    redirect('/');
+    redirect('/auth/login?callbackUrl=/profile'); // no hay que poner return porque la función redirect devuelve "never"
   }
   return (
     <div>

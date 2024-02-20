@@ -7,7 +7,11 @@ import { IoCartOutline, IoSearchOutline } from 'react-icons/io5';
 import { useCartStore, useUIStore } from '@/store';
 import { useEffect, useState } from 'react';
 
-export const TopMenu = () => {
+interface Props {
+  userName: string;
+}
+
+export const TopMenu = ({ userName }: Props) => {
   const totalItemsInCart: number = useCartStore((state) =>
     state.getTotalItems(),
   );
@@ -58,6 +62,7 @@ export const TopMenu = () => {
 
       {/* Buttons */}
       <div className="flex items-center">
+        <h3 className="text-xl">{userName}</h3>
         {/* Search */}
         <Link href={'/search'} className="mx-2">
           <IoSearchOutline className="w-5 h-5" />
