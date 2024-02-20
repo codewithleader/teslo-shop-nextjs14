@@ -10,10 +10,7 @@ export default async function AddressPage() {
     return <h3 className="text-5xl">500 - No hay sesión de usuario</h3>;
   }
   const userDbAddress = (await getUserAddress(session.user.id)) ?? undefined;
-  console.log(
-    '🚀 - file: page.tsx:13 - AddressPage - userDbAddress:',
-    userDbAddress,
-  );
+
   return (
     <div className="flex flex-col sm:justify-center sm:items-center mb-72 px-10 md:px-0">
       <div className="w-full lg:w-[1000px] flex flex-col justify-center text-left">

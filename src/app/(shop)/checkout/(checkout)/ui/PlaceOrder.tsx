@@ -43,10 +43,6 @@ export const PlaceOrder = () => {
       size: product.size,
     }));
     const res = await placeOrder(productToOrder, shippingAddress);
-    console.log(
-      '🚀 - file: PlaceOrder.tsx:46 - onPlaceOrder - shippingAddress:',
-      shippingAddress,
-    );
     console.log('🚀 - file: PlaceOrder.tsx:46 - onPlaceOrder - res:', res);
     setIsPlacingOrder(false);
   };

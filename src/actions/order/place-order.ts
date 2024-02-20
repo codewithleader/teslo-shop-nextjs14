@@ -12,9 +12,8 @@ interface ProductToOrder {
 
 export const placeOrder = async (
   productIds: ProductToOrder[],
-  address: Address,
+  shippingAddress: Address,
 ) => {
-  console.log('🚀 - file: place-order.ts:17 - address:', address);
   // Verify user session
   const session = await authMiddleware();
   const userId = session?.user.id;
@@ -96,30 +95,12 @@ export const placeOrder = async (
     // todo: Validar si el price es cero lanzar error
 
     // 3. Crear la dirección de la orden
-    const {
-      country: countryId,
-      firstName,
-      lastName,
-      address: addrss,
-      address2,
-      postalCode,
-      city,
-      phone,
-    } = address;
+    const { country: countryId, ...restShippingAddress } = shippingAddress;
     const orderAddress = await tx.orderAddress.create({
       data: {
+        ...restShippingAddress,
         countryId,
         orderId: order.id,
-        firstName,
-        lastName,
-        address: addrss,
-        address2,
-        postalCode,
-        city,
-        phone,
-        // ...restAddress,
-        // countryId,
-        // orderId: order.id,
       },
     });
 
