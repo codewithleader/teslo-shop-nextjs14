@@ -8,7 +8,7 @@ import clsx from 'clsx';
 //
 import { useAddressStore } from '@/store';
 import { deleteUserAddress, setUserAddress } from '@/actions';
-import type { Address, Country, UserAddress } from '@/interfaces';
+import type { Country, UserAddress } from '@/interfaces';
 
 type FormInputs = {
   firstName: string;
@@ -28,7 +28,12 @@ interface Props {
 }
 
 export const AddressForm = ({ countries, userDbAddress = {} }: Props) => {
-  const { userId, countryId: country, ...restUserDbAddress } = userDbAddress;
+  const {
+    id, // No se usará
+    userId, // No se usará
+    countryId: country,
+    ...restUserDbAddress
+  } = userDbAddress;
   const router = useRouter();
   const {
     handleSubmit,

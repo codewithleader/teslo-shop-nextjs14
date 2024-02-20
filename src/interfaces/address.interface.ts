@@ -18,6 +18,7 @@ export interface UserAddress {
   city: string;
   phone: string;
 
+  id: string;
   userId: string;
   countryId: string;
 }
