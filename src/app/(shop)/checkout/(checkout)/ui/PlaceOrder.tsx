@@ -6,8 +6,11 @@ import clsx from 'clsx';
 import { placeOrder } from '@/actions';
 import { useAddressStore, useCartStore } from '@/store';
 import { currencyFormat } from '@/utils';
+import { useRouter } from 'next/navigation';
 
 export const PlaceOrder = () => {
+  const router = useRouter();
+  const [errorMessage, setErrorMessage] = useState<string | undefined>();
   const [isLoading, setIsLoading] = useState(true);
   const [isPlacingOrder, setIsPlacingOrder] = useState(false);
   const shippingAddress = useAddressStore((state) => state.shippingAddress);
@@ -26,6 +29,7 @@ export const PlaceOrder = () => {
     state.getSummaryInformation(),
   );
   const cart = useCartStore((state) => state.cart);
+  const clearCart = useCartStore((state) => state.clearCart);
 
   useEffect(() => {
     setIsLoading(false);
@@ -36,15 +40,25 @@ export const PlaceOrder = () => {
   }
 
   const onPlaceOrder = async () => {
+    setErrorMessage(undefined);
     setIsPlacingOrder(true);
     const productToOrder = cart.map((product) => ({
       productId: product.id,
       quantity: product.quantity,
       size: product.size,
     }));
+
+    // Server action
     const res = await placeOrder(productToOrder, shippingAddress);
-    console.log('🚀 - file: PlaceOrder.tsx:46 - onPlaceOrder - res:', res);
-    setIsPlacingOrder(false);
+    if (!res.ok) {
+      setIsPlacingOrder(false);
+      setErrorMessage(res.message);
+      return;
+    }
+
+    // Transacción exitosa
+    clearCart();
+    router.replace(`/orders/${res.order?.id}`);
   };
 
   return (
@@ -117,7 +131,7 @@ export const PlaceOrder = () => {
               </a>
             </span>
           </p>
-          <p className="text-red-500">Error de creación</p>
+          <p className="text-red-500 mb-2">{errorMessage}</p>
           <button
             // href={'/orders/123'}
             disabled={isPlacingOrder}
