@@ -10,6 +10,8 @@ interface ProductToOrder {
   size: Size;
 }
 
+class TransactionError extends Error {}
+
 export const placeOrder = async (
   productIds: ProductToOrder[],
   shippingAddress: Address,
@@ -58,55 +60,111 @@ export const placeOrder = async (
     { subTotal: 0, tax: 0, total: 0 },
   );
 
-  // Crear la transacción de base de datos
-  const prismaTx = await prisma.$transaction(async (tx) => {
-    // 1. Actualizar stock de los productos
+  try {
+    // Crear la transacción de base de datos
+    const prismaTx = await prisma.$transaction(async (tx) => {
+      // 1. Actualizar stock de los productos
 
-    // 2. Crear la orden - Encabezado - Detalles
-    const order = await tx.order.create({
-      data: {
-        userId,
-        itemsInOrder,
-        subTotal,
-        tax,
-        total,
-        // isPaid: false, // por defecto es falso si no se agrega
+      // Acumular los valores
+      const updatedProductsPromises = products.map((product) => {
+        const productQuantity = productIds
+          .filter((p) => p.productId === product.id)
+          .reduce((acc, item) => item.quantity + acc, 0);
 
-        // Nota: Aquí tambien se podía hacer la orderAddress pero se decidió hacerlo aparte con fines educativos.
+        if (productQuantity === 0) {
+          throw new TransactionError(
+            `Product with id: ${product.id}, no tiene cantidad definida`,
+          );
+        }
 
-        OrderItem: {
-          createMany: {
-            data: productIds.map((p) => ({
-              quantity: p.quantity,
-              size: p.size,
-              productId: p.productId,
-              price:
-                products.find(
-                  (product) =>
-                    //
-                    product.id === p.productId,
-                )?.price ?? 0,
-            })),
+        return tx.product.update({
+          where: { id: product.id },
+          data: {
+            // inStock: product.inStock - productQuantity, // No hacer esto
+            inStock: {
+              decrement: productQuantity,
+            },
+          },
+        });
+      });
+
+      const updatedProducts = await Promise.all(updatedProductsPromises);
+
+      // Verificar valores negativos en la existencia (No hay stock)
+      updatedProducts.forEach((product) => {
+        if (product.inStock < 0) {
+          throw new TransactionError(
+            `${product.title} no tiene inventario suficiente`,
+          );
+        }
+      });
+
+      // 2. Crear la orden - Encabezado - Detalles
+      const order = await tx.order.create({
+        data: {
+          userId,
+          itemsInOrder,
+          subTotal,
+          tax,
+          total,
+          // isPaid: false, // por defecto es falso si no se agrega
+
+          // Nota: Aquí tambien se podía hacer la orderAddress pero se decidió hacerlo aparte con fines educativos.
+
+          OrderItem: {
+            createMany: {
+              data: productIds.map((p) => ({
+                quantity: p.quantity,
+                size: p.size,
+                productId: p.productId,
+                price:
+                  products.find(
+                    (product) =>
+                      //
+                      product.id === p.productId,
+                  )?.price ?? 0,
+              })),
+            },
           },
         },
-      },
-    });
+      });
 
-    // todo: Validar si el price es cero lanzar error
+      // todo: Validar si el price es cero lanzar error
 
-    // 3. Crear la dirección de la orden
-    const { country: countryId, ...restShippingAddress } = shippingAddress;
-    const orderAddress = await tx.orderAddress.create({
-      data: {
-        ...restShippingAddress,
-        countryId,
-        orderId: order.id,
-      },
+      // 3. Crear la dirección de la orden
+      const { country: countryId, ...restShippingAddress } = shippingAddress;
+      const orderAddress = await tx.orderAddress.create({
+        data: {
+          ...restShippingAddress,
+          countryId,
+          orderId: order.id,
+        },
+      });
+
+      return {
+        updatedProducts,
+        order,
+        orderAddress,
+      };
     });
 
     return {
-      order,
-      orderAddress,
+      ok: true,
+      order: prismaTx.order,
+      prismaTx,
     };
-  });
+  } catch (error: unknown) {
+    console.error(error);
+    if (error instanceof TransactionError) {
+      return {
+        ok: false,
+        message: error?.message,
+      };
+    } else {
+      return {
+        ok: false,
+        message: 'Hubo un error. Contactar al administrador (Error: 500)',
+      };
+    }
+  }
 };
