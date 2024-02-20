@@ -28,7 +28,7 @@ interface Props {
 }
 
 export const AddressForm = ({ countries, userDbAddress = {} }: Props) => {
-  const { userId, ...restUserDbAddress } = userDbAddress;
+  const { userId, countryId: country, ...restUserDbAddress } = userDbAddress;
   const router = useRouter();
   const {
     handleSubmit,
@@ -38,6 +38,7 @@ export const AddressForm = ({ countries, userDbAddress = {} }: Props) => {
   } = useForm<FormInputs>({
     defaultValues: {
       ...restUserDbAddress,
+      country,
       rememberAddress: false,
     },
   });
