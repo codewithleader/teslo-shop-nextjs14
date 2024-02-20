@@ -2,18 +2,10 @@ import Image from 'next/image';
 import clsx from 'clsx';
 //
 import { Title } from '@/components';
-import { initialData } from '@/seed/seed';
 import { IoCartOutline } from 'react-icons/io5';
-
-const productsInCart = [
-  initialData.products[0],
-  initialData.products[1],
-  initialData.products[2],
-  initialData.products[3],
-  initialData.products[4],
-  initialData.products[5],
-  initialData.products[6],
-];
+import { getOrderById } from '@/actions';
+import { currencyFormat } from '@/utils';
+import { redirect } from 'next/navigation';
 
 interface Props {
   params: {
@@ -21,14 +13,23 @@ interface Props {
   };
 }
 
-export default function OrderByIdPage({ params }: Props) {
+export default async function OrderByIdPage({ params }: Props) {
   const { id } = params;
-  // todo: validaciones
+
+  const { ok, order } = await getOrderById(id);
+
+  if (!ok) {
+    redirect('/');
+  }
+
+  if (!order) {
+    redirect('/');
+  }
 
   return (
     <div className="flex justify-center items-center mb-72 px-10 sm:px-0">
       <div className="flex flex-col w-[552px] md:w-[1000px] md:px-10">
-        <Title title={`Orden #${id}`} />
+        <Title title={`Orden #${id.split('-').at(-1)}`} />
 
         <hr className="md:hidden" />
 
@@ -40,22 +41,23 @@ export default function OrderByIdPage({ params }: Props) {
                 //
                 'flex items-center rounded-lg py-2 px-3.5 text-xs font-bold text-white mb-5',
                 {
-                  'bg-red-500': false,
-                  'bg-green-700': true,
+                  'bg-red-500': !order.isPaid,
+                  'bg-green-700': order.isPaid,
                 },
               )}
             >
               <IoCartOutline size={30} />
-              {/* <span className="mx-2">Pendiente de pago</span> */}
-              <span className="mx-2">Pagada</span>
+              <span className="mx-2">
+                {order.isPaid ? 'Pagada' : 'Pendiente de pago'}
+              </span>
             </div>
 
             {/* Cart Items */}
-            {productsInCart.map((product) => (
-              <div key={product.slug} className="flex mb-5">
+            {order.OrderItem.map((item, index) => (
+              <div key={item.product.slug + '_' + index} className="flex mb-5">
                 <Image
-                  src={`/products/${product.images[0]}`}
-                  alt={product.title}
+                  src={`/products/${item.product.ProductImage[0].url}`}
+                  alt={item.product.slug}
                   width={100}
                   height={100}
                   style={{
@@ -65,9 +67,13 @@ export default function OrderByIdPage({ params }: Props) {
                   className="mr-5 rounded"
                 />
                 <div>
-                  <p>{product.title}</p>
-                  <p>${product.price} x 3</p>
-                  <p className="font-bold">Subtotal: ${product.price * 3}</p>
+                  <p>{item.product.slug}</p>
+                  <p>
+                    ${item.price} x {item.quantity}
+                  </p>
+                  <p className="font-bold">
+                    Subtotal: ${item.price * item.quantity}
+                  </p>
                 </div>
               </div>
             ))}
@@ -81,12 +87,14 @@ export default function OrderByIdPage({ params }: Props) {
               {/* Address */}
               <h2 className="font-bold text-2xl mb-2">Dirección de entrega</h2>
               <div className="mb-10">
-                <p className="text-xl">Antonio Perez</p>
-                <p>Main Street, South River Ave.</p>
-                <p>Center 123</p>
-                <p>Palos Rojos City</p>
-                <p>Zip 123123</p>
-                <p>555 2223344</p>
+                <p className="text-xl">
+                  {order.OrderAddress?.firstName} {order.OrderAddress?.lastName}
+                </p>
+                <p>{order.OrderAddress?.address}</p>
+                <p>{order.OrderAddress?.address2 ?? ''}</p>
+                <p>{order.OrderAddress?.city}</p>
+                <p>{order.OrderAddress?.postalCode}</p>
+                <p>{order.OrderAddress?.phone}</p>
               </div>
               {/* Divider */}
               <div className="w-full h-0.5 rounded bg-gray-300 md:bg-gray-200 mb-10" />
@@ -94,13 +102,34 @@ export default function OrderByIdPage({ params }: Props) {
               <h2 className="text-2xl mb-2">Resumen de orden</h2>
               <div className="grid grid-cols-2">
                 <span>Nro. Productos</span>
-                <span className="text-right">3 artículos</span>
+                <span className="text-right">
+                  {order.itemsInOrder}{' '}
+                  {order.itemsInOrder < 2 ? 'artículo' : 'artículos'}
+                </span>
                 <span>Subtotal</span>
-                <span className="text-right">$ 100</span>
+                <span className="text-right">
+                  {currencyFormat({
+                    value: order.subTotal,
+                    locales: 'en-US',
+                    currency: 'USD',
+                  })}
+                </span>
                 <span>Impuestos (15%)</span>
-                <span className="text-right">$ 100</span>
+                <span className="text-right">
+                  {currencyFormat({
+                    value: order.tax,
+                    locales: 'en-US',
+                    currency: 'USD',
+                  })}
+                </span>
                 <span className="mt-5 text-2xl">Total</span>
-                <span className="mt-5 text-2xl text-right">$ 100</span>
+                <span className="mt-5 text-2xl text-right">
+                  {currencyFormat({
+                    value: order.total,
+                    locales: 'en-US',
+                    currency: 'USD',
+                  })}
+                </span>
               </div>
 
               <div className="mt-5 mb-2 w-full">
@@ -109,14 +138,15 @@ export default function OrderByIdPage({ params }: Props) {
                     //
                     'flex items-center rounded-lg py-2 px-3.5 text-xs font-bold text-white mb-5',
                     {
-                      'bg-red-500': false,
-                      'bg-green-700': true,
+                      'bg-red-500': !order.isPaid,
+                      'bg-green-700': order.isPaid,
                     },
                   )}
                 >
                   <IoCartOutline size={30} />
-                  {/* <span className="mx-2">Pendiente de pago</span> */}
-                  <span className="mx-2">Pagada</span>
+                  <span className="mx-2">
+                    {order.isPaid ? 'Pagada' : 'Pendiente de pago'}
+                  </span>
                 </div>
               </div>
             </div>
