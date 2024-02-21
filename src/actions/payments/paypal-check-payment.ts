@@ -1,5 +1,6 @@
 'use server';
 
+import prisma from '@/lib/prisma';
 import type {
   PaypalOrderStatusResponse,
   PaypalResponseOAuth2Token,
@@ -33,6 +34,23 @@ export const paypalCheckPayment = async (paypalTransactionId: string) => {
   }
 
   // Realizar la actualización en nuestra base de datos
+  try {
+    await prisma.order.update({
+      where: { id: 'c1f71bb6-139b-4b8a-a6ac-6f4d9c50a28f' },
+      data: {
+        isPaid: true,
+        paidAt: new Date(),
+      },
+    });
+
+    // revalidar el path
+  } catch (error) {
+    console.error(error);
+    return {
+      ok: false,
+      message: '500 - El pago no se pudo realizar',
+    };
+  }
 };
 
 const getPaypalBearerToken = async (): Promise<string | null> => {
@@ -52,10 +70,11 @@ const getPaypalBearerToken = async (): Promise<string | null> => {
   const urlencoded = new URLSearchParams();
   urlencoded.append('grant_type', 'client_credentials');
 
-  const requestOptions = {
+  const requestOptions: RequestInit = {
     method: 'POST',
     headers: myHeaders,
     body: urlencoded,
+    cache: 'no-store',
   };
 
   try {
@@ -79,9 +98,10 @@ const verifyPaypalPayment = async (
   const myHeaders = new Headers();
   myHeaders.append('Authorization', `Bearer ${paypalAccessToken}`);
 
-  const requestOptions = {
+  const requestOptions: RequestInit = {
     method: 'GET',
     headers: myHeaders,
+    cache: 'no-store',
   };
 
   try {
