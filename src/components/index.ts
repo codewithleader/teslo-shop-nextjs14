@@ -17,4 +17,7 @@ export * from './ui/pagination/Pagination';
 export * from './product/stock-label/StockLabel';
 
 // SessionProvider
-export * from './provider/Provider';
+export * from './providers/Providers';
+
+// Paypal
+export * from './paypal/PaypalButton';

@@ -1,11 +1,11 @@
 import Image from 'next/image';
+import { redirect } from 'next/navigation';
+import { IoCartOutline } from 'react-icons/io5';
 import clsx from 'clsx';
 //
-import { Title } from '@/components';
-import { IoCartOutline } from 'react-icons/io5';
 import { getOrderById } from '@/actions';
 import { currencyFormat } from '@/utils';
-import { redirect } from 'next/navigation';
+import { PaypalButton, Title } from '@/components';
 
 interface Props {
   params: {
@@ -133,7 +133,12 @@ export default async function OrderByIdPage({ params }: Props) {
               </div>
 
               <div className="mt-5 mb-2 w-full">
-                <div
+                <PaypalButton
+                  //
+                  orderId={order.id}
+                  amount={order.total}
+                />
+                {/* <div
                   className={clsx(
                     //
                     'flex items-center rounded-lg py-2 px-3.5 text-xs font-bold text-white mb-5',
@@ -147,7 +152,7 @@ export default async function OrderByIdPage({ params }: Props) {
                   <span className="mx-2">
                     {order.isPaid ? 'Pagada' : 'Pendiente de pago'}
                   </span>
-                </div>
+                </div> */}
               </div>
             </div>
           </div>

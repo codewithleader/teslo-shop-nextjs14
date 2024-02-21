@@ -2,7 +2,7 @@ import type { Metadata } from 'next';
 //
 import { inter } from '@/config/fonts';
 import './globals.css';
-import { Provider } from '@/components';
+import { Providers } from '@/components';
 
 // Metadata Template: https://nextjs.org/docs/app/api-reference/functions/generate-metadata#template
 export const metadata: Metadata = {
@@ -21,7 +21,7 @@ export default function RootLayout({
   return (
     <html lang="es">
       <body className={inter.className}>
-        <Provider>{children}</Provider>
+        <Providers>{children}</Providers>
       </body>
     </html>
   );
