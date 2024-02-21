@@ -33,12 +33,13 @@ export const PaypalButton = ({ orderId, amount }: Props) => {
     data: CreateOrderData,
     actions: CreateOrderActions,
   ): Promise<string> => {
+    console.log('🚀 - file: PaypalButton.tsx:36 - PaypalButton - data:', data);
     const transactionId = await actions.order.create({
       purchase_units: [
         {
-          // invoice_id: 'order_id',
+          invoice_id: orderId,
           amount: {
-            // value: `${roundedAmound}`,
+            // value: `${roundedAmound}`, // no es necesario el redondeo porque se hizo en el cart.storage.ts
             value: `${amount}`,
             // currency_code: 'USD', // no es necesario porque ya está definido en el provider
           },
