@@ -1,7 +1,13 @@
 'use client';
 
 import { PayPalButtons, usePayPalScriptReducer } from '@paypal/react-paypal-js';
-import type { CreateOrderData, CreateOrderActions } from '@paypal/paypal-js';
+import type {
+  CreateOrderData,
+  CreateOrderActions,
+  OnApproveData,
+  OnApproveActions,
+} from '@paypal/paypal-js';
+import { paypalCheckPayment, setTransactionId } from '@/actions';
 
 interface Props {
   orderId: string;
@@ -10,7 +16,7 @@ interface Props {
 
 export const PaypalButton = ({ orderId, amount }: Props) => {
   const [{ isPending }] = usePayPalScriptReducer();
-  const roundedAmound = Math.round(amount * 100) / 100; // transforma a 2 decimales: 100.25
+  // const roundedAmound = Math.round(amount * 100) / 100; // transforma a 2 decimales: 100.25 // Nota: No hay que hacer el redondeo porque ya se hizo en el metodo "getSummaryInformation" en cart.store.ts
   if (isPending) {
     return (
       <div className="h-36 animate-pulse mb-14">
@@ -32,24 +38,36 @@ export const PaypalButton = ({ orderId, amount }: Props) => {
         {
           // invoice_id: 'order_id',
           amount: {
-            value: `${roundedAmound}`,
+            // value: `${roundedAmound}`,
+            value: `${amount}`,
             // currency_code: 'USD', // no es necesario porque ya está definido en el provider
           },
         },
       ],
     });
-    console.log(
-      '🚀 - file: PaypalButton.tsx:35 - PaypalButton - transactionId:',
-      transactionId,
-    );
+
+    // Guardar el transactionId en la orden en la base de datos
+    const { ok } = await setTransactionId(orderId, transactionId);
+    if (!ok) {
+      throw new Error('No se pudo actualizar la orden');
+    }
 
     return transactionId;
+  };
+
+  const onApprove = async (
+    data: OnApproveData,
+    actions: OnApproveActions,
+  ): Promise<void> => {
+    const details = await actions.order?.capture();
+    if (!details) return;
+    await paypalCheckPayment(details.id); // details.is es el transactionId
   };
 
   return (
     <PayPalButtons
       createOrder={createOrder}
-      //  onApprove={}
+      onApprove={onApprove} // Se dispara cuando el usuario paga en Paypal y regresa la info de la transacción si fue exitosa o no
     />
   );
 };

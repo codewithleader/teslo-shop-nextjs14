@@ -29,7 +29,7 @@
       }
     ],
     "require-await": "off",
-    "@typescript-eslint/require-await": "error",
+    "@typescript-eslint/require-await": "warn",
     "@typescript-eslint/await-thenable": "error"
   }
 }

@@ -30,14 +30,17 @@ export const useCartStore = create<State>()(
 
       getSummaryInformation: () => {
         const { cart } = get();
-        const subTotal = cart.reduce(
+        const subTotalRaw = cart.reduce(
           (subTotal, product) => product.quantity * product.price + subTotal,
           0,
         );
-        const tax = subTotal * 0.15;
-        const total = subTotal + tax;
+        const subTotal = Math.round(subTotalRaw * 100) / 100; // transforma a 2 decimales: 100.25
+        const taxRaw = subTotal * 0.15;
+        const tax = Math.round(taxRaw * 100) / 100;
+        const totalRaw = subTotal + tax;
+        const total = Math.round(totalRaw * 100) / 100;
         const itemsInCart = cart.reduce(
-          (total, item) => total + item.quantity,
+          (accumulator, item) => accumulator + item.quantity,
           0,
         );
         return {
