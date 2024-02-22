@@ -56,6 +56,13 @@ export const Sidebar = () => {
   const isAuthenticated: boolean = !!session?.user;
   const isAdmin: boolean = session?.user.role === 'admin';
 
+  const onLogout = () => {
+    localStorage.removeItem('address-storage');
+    localStorage.removeItem('shopping-cart');
+    localStorage.removeItem('__paypal_storage__');
+    logout();
+  };
+
   return (
     <div>
       {isSideMenuOpen && (
@@ -117,7 +124,7 @@ export const Sidebar = () => {
         {/* Sign Out Button */}
         {isAuthenticated && (
           <button
-            onClick={() => logout()}
+            onClick={onLogout}
             className="flex w-full items-center mt-10 p-2 hover:bg-gray-100 rounded transition-all"
           >
             <IoLogOutOutline size={30} />

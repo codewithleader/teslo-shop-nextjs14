@@ -13,7 +13,7 @@ export default function CheckoutPage() {
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
           {/* Carrito */}
-          <div className="flex flex-col justify-center mt-5">
+          <div className="flex flex-col mt-5">
             <span className="text-xl">Ajustar elementos</span>
             <Link href={'/cart'} className="underline mb-5">
               Editar carrito
