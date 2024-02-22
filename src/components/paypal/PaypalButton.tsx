@@ -66,9 +66,11 @@ export const PaypalButton = ({ orderId, amount }: Props) => {
   };
 
   return (
-    <PayPalButtons
-      createOrder={createOrder}
-      onApprove={onApprove} // Se dispara cuando el usuario paga en Paypal y regresa la info de la transacción si fue exitosa o no
-    />
+    <div className="relative z-0">
+      <PayPalButtons
+        createOrder={createOrder}
+        onApprove={onApprove} // Se dispara cuando el usuario paga en Paypal y regresa la info de la transacción si fue exitosa o no
+      />
+    </div>
   );
 };

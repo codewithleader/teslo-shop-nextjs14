@@ -25,7 +25,7 @@ const userMenuItems: SidebarLinkProps[] = [
     icon: <IoPersonOutline size={30} />,
   },
   {
-    title: 'Ordenes',
+    title: 'Mis Ordenes',
     path: '/orders',
     icon: <IoTicketOutline size={30} />,
   },
@@ -39,7 +39,7 @@ const adminMenuItems: SidebarLinkProps[] = [
   },
   {
     title: 'Ordenes',
-    path: '/',
+    path: '/admin/orders',
     icon: <IoTicketOutline size={30} />,
   },
   {

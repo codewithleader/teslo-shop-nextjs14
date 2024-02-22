@@ -19,3 +19,5 @@ export * from './order/get-orders-by-user';
 // Payments
 export * from './payments/set-transaction-id';
 export * from './payments/paypal-check-payment';
+
+export * from './order/get-paginated-orders';
