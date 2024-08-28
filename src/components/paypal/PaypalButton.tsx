@@ -62,7 +62,7 @@ export const PaypalButton = ({ orderId, amount }: Props) => {
   ): Promise<void> => {
     const details = await actions.order?.capture();
     if (!details) return;
-    await paypalCheckPayment(details.id); // details.is es el transactionId
+    await paypalCheckPayment(details.id); // details.id es el transactionId
   };
 
   return (

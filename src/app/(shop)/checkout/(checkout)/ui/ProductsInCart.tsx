@@ -14,9 +14,9 @@ export const ProductsInCart = () => {
     setIsLoading(false);
   }, []);
 
-  // useEffect(() => {
-  //   if (!isLoading && productsInCart.length === 0) redirect('/');
-  // }, [isLoading, productsInCart]);
+  useEffect(() => {
+    if (!isLoading && productsInCart.length === 0) redirect('/');
+  }, [isLoading, productsInCart]);
 
   if (isLoading) {
     return <p>Loading...</p>;
