@@ -12,17 +12,17 @@ export default async function AdminOrdersPage() {
   const { ok, orders = [] } = await getPaginatedOrders();
 
   if (!ok) {
-    redirect('/auth/login?callbackUrl=/orders');
+    redirect('/auth/login?callbackUrl=/admin/orders');
   }
 
   if (orders.length === 0) {
-    redirect('/auth/login?callbackUrl=/orders');
+    redirect('/auth/login?callbackUrl=/admin/orders');
   }
 
   return (
     // https://tailwindcomponents.com/component/hoverable-table
     <>
-      <Title title="Administrar todas las ordenes" />
+      <Title title="Administrador de ordenes" />
 
       <div className="mb-10">
         <table className="min-w-full">

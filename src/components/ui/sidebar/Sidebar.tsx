@@ -44,7 +44,7 @@ const adminMenuItems: SidebarLinkProps[] = [
   },
   {
     title: 'Usuarios',
-    path: '/',
+    path: '/admin/users',
     icon: <IoPeopleOutline size={30} />,
   },
 ];
